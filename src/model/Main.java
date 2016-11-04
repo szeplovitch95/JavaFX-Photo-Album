@@ -3,6 +3,7 @@ package model;
 import com.sun.java.swing.plaf.windows.resources.windows;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -15,9 +16,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
 	
 	Stage window;
-	Scene scene1, scene2;
-//	Button button;
-//	Button button2;
+	Scene scene1;
+	Button button;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -26,87 +26,39 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		window = primaryStage;
+		window.setTitle("My Application");
 		
-		Label label1 = new Label("Welcome to the first scene");
-		Button button1 = new Button("Go to Scene 2");
-		button1.setOnAction(e -> window.setScene(scene2));
+		HBox topMenu = new HBox();
+		Button buttonA = new Button("File");
+		Button buttonB = new Button("Edit");
+		Button buttonC = new Button("View");
+		topMenu.getChildren().addAll(buttonA, buttonB, buttonC); 
 		
-		VBox layout1 = new VBox(20);
-		layout1.getChildren().addAll(label1, button1);
+		VBox leftMenu = new VBox();
+		Button buttonD = new Button("D");
+		Button buttonE = new Button("E");
+		Button buttonF = new Button("F");
+		leftMenu.getChildren().addAll(buttonD, buttonE, buttonF);
 		
-		scene1 = new Scene(layout1, 200, 200);
+		BorderPane borderPane = new BorderPane();
+		borderPane.setTop(topMenu);
+		borderPane.setLeft(leftMenu);
 		
-		
-		Button button2 = new Button("This scene sucks, go back to scene 1");
-		button2.setOnAction(e -> window.setScene(scene1));
-		
-		//layout2
-		StackPane layout2 = new StackPane();
-		layout2.getChildren().add(button2);
-		scene2 = new Scene(layout2, 600, 300);
-		
-		window.setScene(scene1);
-		window.setTitle("title here");
-		
+	
+		Scene scene = new Scene(borderPane, 300, 250);
+		window.setScene(scene);
 		window.show();
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		primaryStage.setTitle("My Application");		
-//		button2 = new Button("ASdf");
-//		
-//		button2.setOnAction(y -> {
-//			System.out.println("Asdf");
-//		});
-//		
-//		button = new Button();
-//		button.setText("Click");
-//		button.setOnAction(new EventHandler<ActionEvent>() {
-//
-//			@Override
-//			public void handle(ActionEvent event) {
-//				System.out.println("ASdf");
-//			}
-//			
-//		});
-//		
-//		StackPane layout = new StackPane();
-//		layout.getChildren().addAll(button, button2);
-//		
-//		Scene scene = new Scene(layout, 300, 250);
-//		
-//		primaryStage.setScene(scene);
-//		primaryStage.show();
+	}
+	
+	private void closeProgram() {
+		Boolean answer = ConfirmBox.display("Title", "Sure you want to exit?");
+		if(answer) {
+			//Ask professor which one is better
+			window.close();
+			Platform.exit();
+		}
 	}
 
-	
+
 
 }
