@@ -25,7 +25,7 @@ import model.*;
  * @author Shachar Zeplovitch
  * @author Christopher McDonough
  */
-
+ 
 public class LoginController implements Initializable {
     @FXML
     TextField usernameTF;

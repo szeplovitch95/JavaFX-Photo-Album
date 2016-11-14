@@ -26,7 +26,7 @@ import model.*;
  * @author Shachar Zeplovitch
  * @author Christopher McDonough
  */
-
+ 
 public class AdminController implements Initializable { 
 	@FXML private Button createBtn;
 	@FXML private Button removeBtn;
