@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class Photo implements Serializable {
-	private String caption;
+	private String caption; 
 	private File imageFile;
-	private ArrayList<Album> parentAlbums;
-	private ArrayList<Tag> tags;
+	private List<Album> parentAlbums;
+	private List<Tag> tags;
 	private Calendar photoDateAndTime;
 	
 	public Photo(File imageFile) {
@@ -36,7 +37,7 @@ public class Photo implements Serializable {
 		this.imageFile = imageFile;
 	}
 
-	public ArrayList<Album> getParentAlbums() {
+	public List<Album> getParentAlbums() {
 		return parentAlbums;
 	}
 	
@@ -52,8 +53,12 @@ public class Photo implements Serializable {
 		return parentAlbums.contains(pAlbum);
 	}
 
-	public ArrayList<Tag> getTags() {
+	public List<Tag> getTags() {
 		return tags;
+	}
+	
+	public void setTags(List<Tag> tags) {
+	    this.tags = tags;
 	}
 
 	public void addTag(Tag t) {
@@ -65,7 +70,13 @@ public class Photo implements Serializable {
 	}
 	
 	public boolean tagExists(Tag t) {
-		return tags.contains(t);
+	    for(Tag t1 : this.tags) {
+		if(t1.equals(t1)) {
+		    return true;
+		}
+	    }
+	    
+	    return false;
 	}
 	
 	public Calendar getPhotoDateAndTime() {

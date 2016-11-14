@@ -9,7 +9,7 @@ import java.util.Comparator;
 public class Album implements Serializable {
     private String albumName;
     private ArrayList<Photo> photos;
-    private int size = 0;
+    private int size = 0; 
     private Photo earliestPhoto;
     private Photo oldestPhoto;
     private double dateRange;

@@ -22,7 +22,7 @@ import model.User;
 
 public class NewPhotoController implements Initializable {
 	@FXML private Button createBtn;
-	@FXML private Button browseBtn;
+	@FXML private Button browseBtn; 
 	@FXML private Button cancelBtn;
 	@FXML private AnchorPane anchorPane;
 	@FXML private TextField photoName;

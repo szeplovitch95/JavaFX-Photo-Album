@@ -40,7 +40,7 @@ import model.User;
 
 public class AlbumsController implements Initializable {
     private PhotoAlbumUsers listOfAllUsers;
-    private Stage stage;
+    private Stage stage; 
     private User currentUser;
     private Album currentAlbum;
     
