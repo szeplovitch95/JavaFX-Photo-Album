@@ -75,16 +75,18 @@ public class PhotosController implements Initializable {
     }
 
     public void refreshData() {
-	nameLB.setText(currentAlbumChosen.getAlbumName());
-	sizeLB.setText(currentAlbumChosen.getSize() + "");
-	oldestPhotoLB.setText("Wrong Date");
-	dateRangeLB.setText(currentAlbumChosen.getDateRange());
+	if (currentAlbumChosen.getSize() > 0) {
+	    nameLB.setText(currentAlbumChosen.getAlbumName());
+	    sizeLB.setText(currentAlbumChosen.getSize() + "");
+	    oldestPhotoLB.setText(currentAlbumChosen.getOldestPhoto().getDate());
+	    dateRangeLB.setText(currentAlbumChosen.getOldestPhoto().getDate() + "-"
+		    + currentAlbumChosen.getEarliestPhoto().getDate());
+	}
     }
 
     public void initData() throws ClassNotFoundException, IOException {
 
-	refreshData();
-	obsList = FXCollections.observableArrayList(this.getAlbum().getPhotos());
+	obsList = FXCollections.observableArrayList(currentAlbumChosen.getPhotos());
 
 	listViewPhotos.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>() {
 
@@ -95,6 +97,8 @@ public class PhotosController implements Initializable {
 	});
 
 	listViewPhotos.setItems(obsList);
+
+	refreshData();
     }
 
     @FXML
@@ -154,7 +158,7 @@ public class PhotosController implements Initializable {
 
 	currentAlbumChosen.removePhoto(p);
 	obsList.remove(p);
-	listViewPhotos.setItems(this.obsList);
+	listViewPhotos.setItems(obsList);
 
 	refreshData();
 
@@ -175,9 +179,9 @@ public class PhotosController implements Initializable {
 
 	Dialog<Album> dialog = new Dialog<>();
 	dialog.initModality(Modality.APPLICATION_MODAL);
-	dialog.setTitle("Edit Photo");
+	dialog.setTitle("Move Photo ");
 	dialog.setResizable(false);
-	dialog.setHeaderText("Edit Photo:");
+	dialog.setHeaderText("Move photo to another album:");
 
 	Label moveToAlbum = new Label("List of Available Albums: ");
 
@@ -246,9 +250,7 @@ public class PhotosController implements Initializable {
 	    currentAlbumChosen.removePhoto(selectedPhoto);
 	    obsList.remove(selectedPhoto);
 	    listViewPhotos.setItems(obsList);
-
 	    PhotoAlbumUsers.write(userList);
-
 	}
     }
 
@@ -267,10 +269,8 @@ public class PhotosController implements Initializable {
 	dialog.setHeaderText("Copy Photo to an Album");
 
 	Label cpyToAlbum = new Label("List of Available Albums: ");
-
 	ListView<Album> availableAlbumsCpy = new ListView<Album>();
 	ObservableList<Album> albumObsListCpy = FXCollections.observableArrayList(currentUser.getAlbums());
-
 	availableAlbumsCpy.setCellFactory(new Callback<ListView<Album>, ListCell<Album>>() {
 
 	    @Override
@@ -293,7 +293,6 @@ public class PhotosController implements Initializable {
 	});
 
 	availableAlbumsCpy.setItems(albumObsListCpy);
-
 	GridPane gridPane = new GridPane();
 	gridPane.add(cpyToAlbum, 1, 1);
 	gridPane.add(availableAlbumsCpy, 1, 2);
@@ -397,7 +396,12 @@ public class PhotosController implements Initializable {
 		});
 
 		viewBtn.setOnAction(e -> {
-		    viewAction(e, photo);
+		    try {
+			viewAction(e, photo);
+		    } catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		    }
 		});
 	    }
 	}
@@ -445,8 +449,29 @@ public class PhotosController implements Initializable {
 	}
 
 	@FXML
-	public void viewAction(ActionEvent e, Photo p) {
-	    
+	public void viewAction(ActionEvent e, Photo p) throws IOException {
+	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotosSlideshow.fxml"));
+	    Parent root = loader.load();
+
+	    SlideshowController controller = loader.getController();
+	    controller.setUserList(userList);
+	    controller.setCurrentPhoto(p);
+	    controller.setCurrentAlbumChosen(currentAlbumChosen);
+	    controller.setCurrentUser(currentUser);
+	    controller.setStage(stage);
+
+	    Scene slideshowScene = new Scene(root);
+	    try {
+		controller.initData();
+	    } catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+
+	    stage.setScene(slideshowScene);
+
+	    stage.show();
+
 	}
     }
 
