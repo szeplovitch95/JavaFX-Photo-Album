@@ -9,7 +9,7 @@ import java.util.Comparator;
 public class Album implements Serializable {
     private String albumName;
     private ArrayList<Photo> photos;
-    private int size = 0; 
+    private int size = 0;
     private Photo earliestPhoto;
     private Photo oldestPhoto;
     private double dateRange;
@@ -81,9 +81,49 @@ public class Album implements Serializable {
     }
 
     public void setEarliestPhoto(Photo earliestPhoto) {
-	if(earliestPhoto != null) {
-	    this.earliestPhoto = earliestPhoto;	    
+	if (earliestPhoto != null) {
+	    this.earliestPhoto = earliestPhoto;
 	}
+    }
+
+    public Photo previousPhoto(Photo p) {
+	if (p == null) {
+	    return null;
+	}
+
+	if (size < 2) {
+	    return p;
+	}
+
+	for (Photo photo : photos) {
+	    if (p.getImage().equals(photo.getImage())) {
+		if (photos.indexOf(photo) != 0) {
+		    return photos.get(photos.indexOf(photo) - 1);
+		}
+	    }
+	}
+
+	return p;
+    }
+
+    public Photo nextPhoto(Photo p) {
+	if (p == null) {
+	    return null;
+	}
+
+	if (size < 2) {
+	    return p;
+	}
+
+	for (Photo photo : photos) {
+	    if (p.getImage().equals(photo.getImage())) {
+		if (photos.indexOf(photo) != photos.size() - 1) {
+		    return photos.get(photos.indexOf(photo) + 1);
+		}
+	    }
+	}
+
+	return p;
     }
 
     public Photo getOldestPhoto() {
@@ -91,21 +131,21 @@ public class Album implements Serializable {
     }
 
     public void setOldestPhoto(Photo oldestPhoto) {
-	if(oldestPhoto != null) {
-	    this.oldestPhoto = oldestPhoto;	    
+	if (oldestPhoto != null) {
+	    this.oldestPhoto = oldestPhoto;
 	}
     }
 
     public String getDateRange() {
-        if(this.size > 0) {
-            return this.getOldestPhoto() + " - " + this.getEarliestPhoto(); 
-        }
-        
-        return "Empty Album.";
+	if (this.size > 0) {
+	    return this.getOldestPhoto() + " - " + this.getEarliestPhoto();
+	}
+
+	return "Empty Album.";
     }
 
     public void setDateRange(double dateRange) {
-        this.dateRange = dateRange;
+	this.dateRange = dateRange;
     }
 
 }

@@ -7,83 +7,88 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Photo implements Serializable {
-	private String caption; 
-	private File imageFile;
-	private List<Album> parentAlbums;
-	private List<Tag> tags;
-	private Calendar photoDateAndTime;
-	
-	public Photo(File imageFile) {
-		this.imageFile = imageFile;
-		parentAlbums = new ArrayList<Album>();
-		tags = new ArrayList<Tag>();
-		photoDateAndTime = Calendar.getInstance();
-		photoDateAndTime.set(Calendar.MILLISECOND, 0);
-	}
-	
-	public String getCaption() {
-		return caption;
-	}
+    private String caption;
+    private File imageFile;
+    private List<Album> parentAlbums;
+    private List<Tag> tags;
+    private Calendar photoDateAndTime;
 
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
+    public Photo(File imageFile) {
+	this.imageFile = imageFile;
+	parentAlbums = new ArrayList<Album>();
+	tags = new ArrayList<Tag>();
+	photoDateAndTime = Calendar.getInstance();
+	photoDateAndTime.set(Calendar.MILLISECOND, 0);
+    }
 
-	public File getImage() {
-		return imageFile;
-	}
+    public String getCaption() {
+	return caption;
+    }
 
-	public void setImageFile(File imageFile) {
-		this.imageFile = imageFile;
-	}
+    public void setCaption(String caption) {
+	this.caption = caption;
+    }
 
-	public List<Album> getParentAlbums() {
-		return parentAlbums;
-	}
-	
-	public void addParentAlbum(Album pAlbum) {
-		parentAlbums.add(pAlbum);
-	}
-	
-	public void removeParentAlbum(Album pAlbum) {
-		parentAlbums.remove(pAlbum);
-	}
-	
-	public boolean parentAlbumExists(Album pAlbum) {
-		return parentAlbums.contains(pAlbum);
-	}
+    public File getImage() {
+	return imageFile;
+    }
 
-	public List<Tag> getTags() {
-		return tags;
-	}
-	
-	public void setTags(List<Tag> tags) {
-	    this.tags = tags;
-	}
+    public void setImageFile(File imageFile) {
+	this.imageFile = imageFile;
+    }
 
-	public void addTag(Tag t) {
-		tags.add(t);
-	}
-	
-	public void removeTag(Tag t) {
-		tags.remove(t);
-	}
-	
-	public boolean tagExists(Tag t) {
-	    for(Tag t1 : this.tags) {
-		if(t1.equals(t1)) {
-		    return true;
-		}
+    public String getDate() {
+	String[] dateArr = photoDateAndTime.getTime().toString().split("\\s+");
+	return dateArr[0] + " " + dateArr[1] + " " + dateArr[2] + ", " + dateArr[3];
+    }
+
+    public List<Album> getParentAlbums() {
+	return parentAlbums;
+    }
+
+    public void addParentAlbum(Album pAlbum) {
+	parentAlbums.add(pAlbum);
+    }
+
+    public void removeParentAlbum(Album pAlbum) {
+	parentAlbums.remove(pAlbum);
+    }
+
+    public boolean parentAlbumExists(Album pAlbum) {
+	return parentAlbums.contains(pAlbum);
+    }
+
+    public List<Tag> getTags() {
+	return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+	this.tags = tags;
+    }
+
+    public void addTag(Tag t) {
+	tags.add(t);
+    }
+
+    public void removeTag(Tag t) {
+	tags.remove(t);
+    }
+
+    public boolean tagExists(Tag t) {
+	for (Tag t1 : this.tags) {
+	    if (t1.equals(t1)) {
+		return true;
 	    }
-	    
-	    return false;
-	}
-	
-	public Calendar getPhotoDateAndTime() {
-		return photoDateAndTime;
 	}
 
-	public void setPhotoDateAndTime(Calendar photoDateAndTime) {
-		this.photoDateAndTime = photoDateAndTime;
-	}
+	return false;
+    }
+
+    public Calendar getPhotoDateAndTime() {
+	return photoDateAndTime;
+    }
+
+    public void setPhotoDateAndTime(Calendar photoDateAndTime) {
+	this.photoDateAndTime = photoDateAndTime;
+    }
 }

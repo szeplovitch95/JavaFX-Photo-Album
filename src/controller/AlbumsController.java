@@ -40,33 +40,32 @@ import model.User;
 
 public class AlbumsController implements Initializable {
     private PhotoAlbumUsers listOfAllUsers;
-    private Stage stage; 
+    private Stage stage;
     private User currentUser;
     private Album currentAlbum;
-    
+
     @FXML
-     Button createBtn;
+    Button createBtn;
     @FXML
-     Button removeBtn;
+    Button removeBtn;
     @FXML
-     Button renameBtn;
+    Button renameBtn;
     @FXML
-     Button openBtn;
+    Button openBtn;
     @FXML
-     Button logoutBtn;
+    Button logoutBtn;
     @FXML
-     Label welcomeLB;
-     ObservableList<Album> obsList = null;
+    Label welcomeLB;
+    ObservableList<Album> obsList = null;
     @FXML
-     ListView<Album> listView;
+    ListView<Album> listView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-
     public void initData() throws ClassNotFoundException, IOException {
-//	listOfAllUsers = PhotoAlbumUsers.read();
+	// listOfAllUsers = PhotoAlbumUsers.read();
 	obsList = FXCollections.observableArrayList(currentUser.getAlbums());
 	listView.setItems(obsList);
 	welcomeLB.setText("  Welcome " + currentUser.getUsername());
@@ -177,11 +176,11 @@ public class AlbumsController implements Initializable {
 	dialog.setHeaderText("Enter New Album's Name below:");
 
 	Album currentAlbum = listView.getSelectionModel().getSelectedItem();
-	
-	if(currentAlbum == null) {
+
+	if (currentAlbum == null) {
 	    return;
 	}
-	
+
 	Label albumName = new Label("Album Name: ");
 	TextField albumNameTF = new TextField(currentAlbum.getAlbumName());
 	Platform.runLater(() -> albumNameTF.requestFocus());
@@ -306,7 +305,7 @@ public class AlbumsController implements Initializable {
     private void closeAdminAppWindow() {
 	stage.close();
     }
-    
+
     public void setUser(User u) {
 	this.currentUser = u;
     }
