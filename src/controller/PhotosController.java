@@ -121,6 +121,9 @@ public class PhotosController implements Initializable {
 	fileChooser.setTitle("Choose a Photo");
 	FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("jpg or png files ONLY (*.jpg, *.png)",
 		"*.jpg");
+	
+	//fileChooser.setInitialDirectory(new File("C:\\Users\\Dror\\Software Meth Workspace\\PhotoAlbum04\\images"));
+	
 	fileChooser.getExtensionFilters().add(extFilter);
 	File file = fileChooser.showOpenDialog(stage);
 

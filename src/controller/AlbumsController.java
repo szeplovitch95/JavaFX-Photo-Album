@@ -73,9 +73,8 @@ public class AlbumsController implements Initializable {
 	listView.setCellFactory(new Callback<ListView<Album>, ListCell<Album>>() {
 
 	    @Override
-	    public ListCell<Album> call(ListView<Album> p) {
+	    public ListCell<Album> call(ListView<Album> p) { 
 		ListCell<Album> cell = new ListCell<Album>() {
-
 		    @Override
 		    protected void updateItem(Album album, boolean empty) {
 			super.updateItem(album, empty);
