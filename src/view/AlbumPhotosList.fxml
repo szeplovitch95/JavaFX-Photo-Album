@@ -25,15 +25,15 @@
 						<Button fx:id="copyBtn" defaultButton="true" layoutX="527.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleCopyBtnAction" prefHeight="31.0" prefWidth="117.0" text="Copy" />
 						<Button fx:id="searchBtn" defaultButton="true" layoutX="658.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleSearchBtnAction" prefHeight="31.0" prefWidth="117.0" text="Search" />
 						<Button fx:id="moveBtn" defaultButton="true" layoutX="272.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleMoveBtnAction" prefHeight="31.0" prefWidth="117.0" text="Move" />
-                  <Label layoutX="24.0" layoutY="21.0" prefHeight="38.0" prefWidth="153.0" text="Album's Name: " />
+                  <Label layoutX="24.0" layoutY="21.0" prefHeight="38.0" prefWidth="108.0" text="Album's Name: " />
                   <Label layoutX="24.0" layoutY="79.0" prefHeight="38.0" prefWidth="153.0" text="Album's Size:" />
-                  <Label layoutX="331.0" layoutY="21.0" prefHeight="38.0" prefWidth="153.0" text="Oldest Photo: " />
-                  <Label layoutX="323.0" layoutY="79.0" prefHeight="38.0" prefWidth="153.0" text="Photos Date Range: " />
-                  <Label fx:id="oldestPhotoLB" layoutX="459.0" layoutY="79.0" prefHeight="38.0" prefWidth="153.0" />
-                  <Label fx:id="nameLB" layoutX="131.0" layoutY="21.0" prefHeight="38.0" prefWidth="153.0" />
-                  <Label fx:id="sizeLB" layoutX="119.0" layoutY="79.0" prefHeight="38.0" prefWidth="153.0" />
-                  <Label fx:id="dateRangeLB" layoutX="425.0" layoutY="21.0" prefHeight="38.0" prefWidth="153.0" />
-                  <Button fx:id="logoutBtn" defaultButton="true" layoutX="658.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleLogoutBtnAction" prefHeight="31.0" prefWidth="117.0" text="Logout" />
+                  <Label layoutX="272.0" layoutY="21.0" prefHeight="38.0" prefWidth="99.0" text="Oldest Photo: " />
+                  <Label layoutX="272.0" layoutY="79.0" prefHeight="38.0" prefWidth="137.0" text="Photos Date Range: " />
+                  <Label fx:id="dateRangeLB" layoutX="410.0" layoutY="79.0" prefHeight="38.0" prefWidth="345.0" />
+                  <Label fx:id="nameLB" layoutX="131.0" layoutY="21.0" prefHeight="38.0" prefWidth="129.0" />
+                  <Label fx:id="sizeLB" layoutX="119.0" layoutY="79.0" prefHeight="38.0" prefWidth="64.0" />
+                  <Label fx:id="oldestPhotoLB" layoutX="368.0" layoutY="21.0" prefHeight="38.0" prefWidth="295.0" />
+                  <Button fx:id="logoutBtn" defaultButton="true" layoutX="667.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleLogoutBtnAction" prefHeight="31.0" prefWidth="117.0" text="Logout" />
 					</children>
 				</AnchorPane>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="414.0" prefWidth="798.0">

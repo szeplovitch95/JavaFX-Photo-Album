@@ -1,8 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</BorderPane>
-
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="749.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoSearchController">
+   <children>
+      <SplitPane dividerPositions="0.13259668508287292" orientation="VERTICAL" prefHeight="545.0" prefWidth="751.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Button fx:id="backBtn" layoutX="25.0" layoutY="18.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="31.0" prefWidth="86.0" text="Back" />
+                  <Button fx:id="logoutBtn" layoutX="658.0" layoutY="18.0" mnemonicParsing="false" onAction="#logoutBtnAction" text="Logout" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="749.0">
+               <children>
+                  <Label layoutX="148.0" layoutY="14.0" prefHeight="40.0" prefWidth="486.0" text="Search for photos in this album below: ">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="31.0" layoutY="73.0" prefHeight="21.0" prefWidth="140.0" text="Search by tags:" />
+                  <Label layoutX="31.0" layoutY="223.0" prefHeight="21.0" prefWidth="167.0" text="Search by Date Range: " />
+                  <Label layoutX="45.0" layoutY="111.0" prefHeight="21.0" prefWidth="140.0" text="Enter a Tag Type: " />
+                  <Label layoutX="45.0" layoutY="154.0" prefHeight="21.0" prefWidth="140.0" text="Enter a Tag Value:" />
+                  <TextField fx:id="tagTypeTF" layoutX="185.0" layoutY="106.0" prefHeight="31.0" prefWidth="154.0" />
+                  <TextField fx:id="tagValueTF" layoutX="185.0" layoutY="149.0" prefHeight="31.0" prefWidth="154.0" />
+                  <DatePicker fx:id="startDatePicker" layoutX="210.0" layoutY="256.0" prefHeight="31.0" prefWidth="236.0" promptText="From Date" />
+                  <DatePicker fx:id="endDatePicker" layoutX="210.0" layoutY="307.0" prefHeight="31.0" prefWidth="236.0" promptText="To Date" />
+                  <Label layoutX="45.0" layoutY="261.0" prefHeight="21.0" prefWidth="140.0" text="Enter Starting Date:" />
+                  <Label layoutX="45.0" layoutY="307.0" prefHeight="21.0" prefWidth="140.0" text="Enter Ending Date:" />
+                  <Button fx:id="searchBtn" defaultButton="true" layoutX="589.0" layoutY="392.0" mnemonicParsing="false" onAction="#searchBtnAction" prefHeight="31.0" prefWidth="113.0" text="Search" />
+                  <ListView fx:id="searchedTagsLV" layoutX="489.0" layoutY="76.0" prefHeight="147.0" prefWidth="200.0" />
+                  <Button fx:id="addTagBtn" layoutX="382.0" layoutY="91.0" mnemonicParsing="false" onAction="#addTagBtnAction" prefHeight="31.0" prefWidth="86.0" text="Add Tag" />
+                  <Button fx:id="removeTagBtn" onAction="#removeTagBtnAction" layoutX="382.0" layoutY="149.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="86.0" text="Remove" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</FlowPane>

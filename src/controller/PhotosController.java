@@ -79,8 +79,8 @@ public class PhotosController implements Initializable {
 	    nameLB.setText(currentAlbumChosen.getAlbumName());
 	    sizeLB.setText(currentAlbumChosen.getSize() + "");
 	    oldestPhotoLB.setText(currentAlbumChosen.getOldestPhoto().getDate());
-	    dateRangeLB.setText(currentAlbumChosen.getOldestPhoto().getDate() + "-"
-		    + currentAlbumChosen.getEarliestPhoto().getDate());
+	    dateRangeLB.setText(currentAlbumChosen.getEarliestPhoto().getDate() + "-"
+		    + currentAlbumChosen.getOldestPhoto().getDate());
 	}
     }
 
@@ -145,7 +145,17 @@ public class PhotosController implements Initializable {
 
     @FXML
     protected void handleSearchBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
-
+	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotoSearch.fxml"));
+	Parent root = (Parent) loader.load();
+	PhotoSearchController controller = loader.<PhotoSearchController>getController();
+	Scene homeScene = new Scene(root);
+	controller.setUserList(userList);
+	controller.setCurrentUser(currentUser);
+	controller.setCurrentAlbumChosen(currentAlbumChosen);
+	controller.initData();
+	controller.setStage(stage);
+	stage.setScene(homeScene);
+	stage.show();
     }
 
     @FXML

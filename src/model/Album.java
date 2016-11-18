@@ -5,10 +5,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class Album implements Serializable {
     private String albumName;
-    private ArrayList<Photo> photos;
+    private List<Photo> photos;
     private int size = 0;
     private Photo earliestPhoto;
     private Photo oldestPhoto;
@@ -31,11 +32,11 @@ public class Album implements Serializable {
 	this.albumName = albumName;
     }
 
-    public ArrayList<Photo> getPhotos() {
+    public List<Photo> getPhotos() {
 	return photos;
     }
 
-    public void setPhotos(ArrayList<Photo> photos) {
+    public void setPhotos(List<Photo> photos) {
 	this.photos = photos;
     }
 

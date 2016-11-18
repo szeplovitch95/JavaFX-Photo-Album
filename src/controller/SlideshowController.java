@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 
 import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -168,6 +169,17 @@ public class SlideshowController implements Initializable {
 
 	Platform.runLater(() -> tagTypeTF.requestFocus());
 
+	BooleanBinding bb = new BooleanBinding() {
+	    {
+		super.bind(tagTypeTF.textProperty(), tagValueTF.textProperty());
+	    }
+
+	    @Override
+	    protected boolean computeValue() {
+		return (tagTypeTF.getText().trim().isEmpty() || tagValueTF.getText().trim().isEmpty());
+	    }
+	};
+
 	GridPane gridPane = new GridPane();
 	gridPane.add(tagTypeLB, 1, 1);
 	gridPane.add(tagTypeTF, 2, 1);
@@ -179,7 +191,8 @@ public class SlideshowController implements Initializable {
 	ButtonType addBtn = new ButtonType("Add", ButtonData.OK_DONE);
 	ButtonType cancelBtn = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 	dialog.getDialogPane().getButtonTypes().addAll(addBtn, cancelBtn);
-
+	dialog.getDialogPane().lookupButton(addBtn).disableProperty().bind(bb);
+	
 	dialog.setResultConverter(new Callback<ButtonType, Tag>() {
 
 	    @Override
