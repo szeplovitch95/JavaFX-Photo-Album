@@ -38,6 +38,10 @@ public class Album implements Serializable {
 
     public void setPhotos(List<Photo> photos) {
 	this.photos = photos;
+	this.size = photos.size();
+	sortByDate();
+	this.setEarliestPhoto(this.photos.get(0));
+	this.setOldestPhoto(this.photos.get(this.size - 1));
     }
 
     public void addPhoto(Photo photo) {

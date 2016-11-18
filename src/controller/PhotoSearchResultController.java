@@ -1,6 +1,7 @@
 package controller;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -90,7 +91,7 @@ public class PhotoSearchResultController implements Initializable {
 	});
 
 	photoResultLV.setItems(obsList);
-	
+
 	BooleanBinding bb = new BooleanBinding() {
 	    {
 		super.bind(photoResultLV.getProperties(), albumName.textProperty());
@@ -103,21 +104,38 @@ public class PhotoSearchResultController implements Initializable {
 	};
 
 	createNewAlbumBtn.disableProperty().bind(bb);
-	
+
     }
 
     @FXML
     protected void createNewAlbumBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	Album newAlbum = new Album(albumName.getText().trim());
-	if(currentUser.albumExists(newAlbum)) {
-	    //create an alert that says that the name is already taken.
+	if (currentUser.albumExists(newAlbum)) {
+	    // create an alert that says that the name is already taken.
 	}
-	
-	newAlbum.setPhotos(subsetPhotos);
+
+	newAlbum.setPhotos(createNewPhotoList());
+	newAlbum.setSize(subsetPhotos.size());
 	currentUser.addAlbum(newAlbum);
+
 	saveData();
-	
+
 	backToAlbumPage(null);
+    }
+
+    private List<Photo> createNewPhotoList() {
+	List<Photo> newList = new ArrayList<Photo>();
+
+	for (Photo p : subsetPhotos) {
+	    File newPhotoPath = p.getImage();
+	    Photo p1 = new Photo(newPhotoPath);
+	    p1.setCaption(p.getCaption());
+	    p1.setPhotoDateAndTime(p.getPhotoDateAndTime());
+	    p1.setTags(p.getTags());
+	    newList.add(p1);
+	}
+
+	return newList;
     }
 
     @FXML
@@ -135,8 +153,8 @@ public class PhotoSearchResultController implements Initializable {
 	stage.setScene(homeScene);
 	stage.show();
     }
-    
-    @FXML 
+
+    @FXML
     protected void backToAlbumPage(ActionEvent event) throws IOException, ClassNotFoundException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
 	Parent root = (Parent) loader.load();
@@ -161,8 +179,8 @@ public class PhotoSearchResultController implements Initializable {
 	for (Photo p : allPhotos) {
 	    if (isContainedInDateRange(startDate, endDate, p)) {
 		for (Tag t : p.getTags()) {
-		    for(Tag t2 : searchedTagsList) {
-			if(t.equals(t2)) {
+		    for (Tag t2 : searchedTagsList) {
+			if (t.equals(t2)) {
 			    searchedPhotos.add(p);
 			}
 		    }
@@ -174,24 +192,24 @@ public class PhotoSearchResultController implements Initializable {
     }
 
     private boolean isContainedInDateRange(LocalDate startDate, LocalDate endDate, Photo p) {
-	if(startDate == null && endDate == null) {
+	if (startDate == null && endDate == null) {
 	    return true;
 	}
 
 	LocalDate date = p.getPhotoDateAndTime().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-	if(startDate == null) {
-	    if(date.isBefore(endDate) || date.isEqual(endDate)) {
+	if (startDate == null) {
+	    if (date.isBefore(endDate) || date.isEqual(endDate)) {
 		return true;
 	    }
 	}
-	
-	if(endDate == null) {
-	    if(date.isAfter(startDate) || date.isEqual(startDate)) {
+
+	if (endDate == null) {
+	    if (date.isAfter(startDate) || date.isEqual(startDate)) {
 		return true;
 	    }
-	}	
-	
+	}
+
 	if (date.isAfter(startDate) && date.isBefore(endDate)) {
 	    return true;
 	}
