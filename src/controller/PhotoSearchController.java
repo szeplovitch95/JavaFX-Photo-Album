@@ -43,7 +43,6 @@ public class PhotoSearchController implements Initializable {
     Button addTagBtn;
     @FXML
     Button removeTagBtn;
-
     @FXML
     TextField tagValueTF;
     @FXML
@@ -197,6 +196,7 @@ public class PhotoSearchController implements Initializable {
 	Scene homeScene = new Scene(root);
 	controller.setUserList(userList);
 	controller.setCurrentUser(currentUser);
+	controller.setCurrentAlbumChosen(currentAlbumChosen);
 	controller.setStage(stage);
 	controller.setSearchedTagsList(tagList);
 	controller.setStartDate(startDatePicker.getValue());

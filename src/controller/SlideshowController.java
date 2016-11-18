@@ -54,8 +54,6 @@ public class SlideshowController implements Initializable {
     @FXML
     Button removeTagBtn;
     @FXML
-    Button editTagBtn;
-    @FXML
     ListView<Tag> tagsLV;
     @FXML
     ImageView imageView;
@@ -76,10 +74,8 @@ public class SlideshowController implements Initializable {
     }
 
     public void initData() throws ClassNotFoundException, IOException {
-
 	captionLB.setText(currentPhoto.getCaption());
 	dateLB.setText(currentPhoto.getPhotoDateAndTime().toString());
-
 	obsList = FXCollections.observableArrayList(currentPhoto.getTags());
 
 	tagsLV.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {
@@ -192,15 +188,18 @@ public class SlideshowController implements Initializable {
 	ButtonType cancelBtn = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 	dialog.getDialogPane().getButtonTypes().addAll(addBtn, cancelBtn);
 	dialog.getDialogPane().lookupButton(addBtn).disableProperty().bind(bb);
-	
+
 	dialog.setResultConverter(new Callback<ButtonType, Tag>() {
 
 	    @Override
 	    public Tag call(ButtonType btn) {
 		if (btn == addBtn) {
 		    if (tagTypeTF.getText().trim().isEmpty() || tagTypeTF.getText().isEmpty()) {
-			System.out.println("error detected!");
-		    } else {
+			AlertBox.display("Error: Empty tag values.", "Tag textfields cannot be empty.");
+		    } else if (currentPhoto.tagExists(new Tag(tagTypeTF.getText().trim(), tagValueTF.getText().trim()))) {
+			AlertBox.display("Duplicate Tags Detected", "Cannot have duplicate tags on the same photo.");
+		    }
+		    else {
 			return new Tag(tagTypeTF.getText(), tagValueTF.getText());
 		    }
 		}
@@ -236,11 +235,6 @@ public class SlideshowController implements Initializable {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-    }
-
-    @FXML
-    protected void handleEditTagBtnAction(ActionEvent event) {
-
     }
 
     @FXML

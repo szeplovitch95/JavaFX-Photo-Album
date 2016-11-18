@@ -45,6 +45,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Album;
+import model.AlertBox;
 import model.Photo;
 import model.PhotoAlbumUsers;
 import model.Tag;
@@ -104,22 +105,22 @@ public class PhotoSearchResultController implements Initializable {
 	};
 
 	createNewAlbumBtn.disableProperty().bind(bb);
-
     }
 
     @FXML
     protected void createNewAlbumBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	Album newAlbum = new Album(albumName.getText().trim());
-	if (currentUser.albumExists(newAlbum)) {
-	    // create an alert that says that the name is already taken.
+	
+	//Checks if the albums name already exists.
+	if (currentUser.getAlbumByName(newAlbum.getAlbumName()) != null) {
+	    AlertBox.display("Error: Duplicate Album Name", "Please pick a different name for you album.");
+	    return;
 	}
 
 	newAlbum.setPhotos(createNewPhotoList());
 	newAlbum.setSize(subsetPhotos.size());
 	currentUser.addAlbum(newAlbum);
-
 	saveData();
-
 	backToAlbumPage(null);
     }
 
@@ -170,8 +171,8 @@ public class PhotoSearchResultController implements Initializable {
     }
 
     private List<Photo> getSearchedPhotoList() {
-	if (searchedTagsList == null || allPhotos == null) {
-	    return null;
+	if (searchedTagsList.size() == 0 && startDate == null && endDate == null) {
+	    return allPhotos;
 	}
 
 	List<Photo> searchedPhotos = new ArrayList<Photo>();

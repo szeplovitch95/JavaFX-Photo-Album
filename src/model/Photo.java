@@ -76,7 +76,7 @@ public class Photo implements Serializable {
 
     public boolean tagExists(Tag t) {
 	for (Tag t1 : this.tags) {
-	    if (t1.equals(t1)) {
+	    if (t1.equals(t)) {
 		return true;
 	    }
 	}
