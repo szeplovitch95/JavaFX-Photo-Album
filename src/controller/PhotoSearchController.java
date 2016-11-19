@@ -157,13 +157,12 @@ public class PhotoSearchController implements Initializable {
 
     @FXML
     protected void backBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
-	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AlbumPhotosList.fxml"));
+	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
 	Parent root = (Parent) loader.load();
-	PhotosController controller = loader.<PhotosController>getController();
+	AlbumsController controller = loader.<AlbumsController>getController();
 	Scene homeScene = new Scene(root);
 	controller.setListOfUsers(userList);
 	controller.setUser(currentUser);
-	controller.setAlbum(currentAlbumChosen);
 	controller.setStage(stage);
 	controller.initData();
 	controller.setStage(stage);
@@ -196,7 +195,6 @@ public class PhotoSearchController implements Initializable {
 	Scene homeScene = new Scene(root);
 	controller.setUserList(userList);
 	controller.setCurrentUser(currentUser);
-	controller.setCurrentAlbumChosen(currentAlbumChosen);
 	controller.setStage(stage);
 	controller.setSearchedTagsList(tagList);
 	controller.setStartDate(startDatePicker.getValue());

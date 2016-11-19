@@ -19,12 +19,11 @@
 								<Font size="37.0" />
 							</font>
 						</Label>
-						<Button fx:id="homeBtn" defaultButton="true" layoutX="14.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleHomeBtnAction" prefHeight="31.0" prefWidth="117.0" text="Home" />
-						<Button fx:id="addBtn" defaultButton="true" layoutX="142.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleAddBtnAction" prefHeight="31.0" prefWidth="117.0" text="Add" />
-						<Button fx:id="removeBtn" defaultButton="true" layoutX="400.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleRemoveBtnAction" prefHeight="31.0" prefWidth="117.0" text="Remove " />
-						<Button fx:id="copyBtn" defaultButton="true" layoutX="527.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleCopyBtnAction" prefHeight="31.0" prefWidth="117.0" text="Copy" />
-						<Button fx:id="searchBtn" defaultButton="true" layoutX="658.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleSearchBtnAction" prefHeight="31.0" prefWidth="117.0" text="Search" />
-						<Button fx:id="moveBtn" defaultButton="true" layoutX="272.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleMoveBtnAction" prefHeight="31.0" prefWidth="117.0" text="Move" />
+						<Button fx:id="homeBtn" defaultButton="true" layoutX="14.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleHomeBtnAction" prefHeight="31.0" prefWidth="117.0" text="Back" />
+						<Button fx:id="addBtn" defaultButton="true" layoutX="163.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleAddBtnAction" prefHeight="31.0" prefWidth="117.0" text="Add" />
+						<Button fx:id="removeBtn" defaultButton="true" layoutX="482.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleRemoveBtnAction" prefHeight="31.0" prefWidth="117.0" text="Remove " />
+						<Button fx:id="copyBtn" defaultButton="true" layoutX="651.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleCopyBtnAction" prefHeight="31.0" prefWidth="117.0" text="Copy" />
+						<Button fx:id="moveBtn" defaultButton="true" layoutX="322.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleMoveBtnAction" prefHeight="31.0" prefWidth="117.0" text="Move" />
                   <Label layoutX="24.0" layoutY="21.0" prefHeight="38.0" prefWidth="108.0" text="Album's Name: " />
                   <Label layoutX="24.0" layoutY="79.0" prefHeight="38.0" prefWidth="153.0" text="Album's Size:" />
                   <Label layoutX="272.0" layoutY="21.0" prefHeight="38.0" prefWidth="99.0" text="Oldest Photo: " />

@@ -54,6 +54,8 @@ public class AlbumsController implements Initializable {
     Button openBtn;
     @FXML
     Button logoutBtn;
+    @FXML 
+    Button searchBtn;
     @FXML
     Label welcomeLB;
     ObservableList<Album> obsList = null;
@@ -97,6 +99,20 @@ public class AlbumsController implements Initializable {
 
     public void setCurrentUser(String username) {
 	currentUser = listOfAllUsers.getUserByUsername(username);
+    }
+    
+    @FXML
+    protected void handleSearchBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
+	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotoSearch.fxml"));
+	Parent root = (Parent) loader.load();
+	PhotoSearchController controller = loader.<PhotoSearchController>getController();
+	Scene homeScene = new Scene(root);
+	controller.setUserList(listOfAllUsers);
+	controller.setCurrentUser(currentUser);
+	controller.initData();
+	controller.setStage(stage);
+	stage.setScene(homeScene);
+	stage.show();
     }
 
     @FXML

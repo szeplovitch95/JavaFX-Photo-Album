@@ -146,20 +146,7 @@ public class PhotosController implements Initializable {
 	refreshData();
     }
 
-    @FXML
-    protected void handleSearchBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
-	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotoSearch.fxml"));
-	Parent root = (Parent) loader.load();
-	PhotoSearchController controller = loader.<PhotoSearchController>getController();
-	Scene homeScene = new Scene(root);
-	controller.setUserList(userList);
-	controller.setCurrentUser(currentUser);
-	controller.setCurrentAlbumChosen(currentAlbumChosen);
-	controller.initData();
-	controller.setStage(stage);
-	stage.setScene(homeScene);
-	stage.show();
-    }
+
 
     @FXML
     protected void handleRemoveBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -429,8 +416,6 @@ public class PhotosController implements Initializable {
 
 	    Label photoCaption = new Label("Photo's Caption: ");
 	    TextField photoCaptionTF = new TextField(p.getCaption());
-	    Label photoTags = new Label("Photo's Tags: ");
-	    TextField photoTagsTF = new TextField(p.getTags().toString());
 
 	    Platform.runLater(() -> photoCaptionTF.requestFocus());
 
@@ -438,8 +423,6 @@ public class PhotosController implements Initializable {
 	    gridPane.add(photoCaption, 1, 1);
 	    gridPane.add(photoCaptionTF, 2, 1);
 
-	    gridPane.add(photoTags, 1, 2);
-	    gridPane.add(photoTagsTF, 2, 2);
 	    dialog.getDialogPane().setContent(gridPane);
 
 	    ButtonType saveBtn = new ButtonType("Save", ButtonData.OK_DONE);
