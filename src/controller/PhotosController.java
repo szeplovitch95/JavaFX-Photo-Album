@@ -81,6 +81,9 @@ public class PhotosController implements Initializable {
 	    oldestPhotoLB.setText(currentAlbumChosen.getOldestPhoto().getDate());
 	    dateRangeLB.setText(currentAlbumChosen.getEarliestPhoto().getDate() + "-"
 		    + currentAlbumChosen.getOldestPhoto().getDate());
+	} else {
+	    oldestPhotoLB.setText("No photos in this album.");
+	    dateRangeLB.setText("No Photos in this album");
 	}
     }
 
@@ -389,8 +392,13 @@ public class PhotosController implements Initializable {
 		imageView.setImage(image);
 		viewBtn.setVisible(true);
 		editBtn.setVisible(true);
-		captionL.setText("Caption: " + photo.getCaption());
-
+		
+		if(photo.getCaption() == null) {
+		    captionL.setText("Caption: No Caption.");
+		} else {
+		    captionL.setText("Caption: " + photo.getCaption());		    
+		}
+		
 		editBtn.setOnAction(e -> {
 		    editAction(e, photo);
 		});
