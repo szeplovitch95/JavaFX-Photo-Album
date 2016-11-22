@@ -30,6 +30,10 @@ import model.PhotoAlbumUsers;
 import model.Tag;
 import model.User;
 
+/**
+ * @author Shachar Zeplovitch
+ * @author Christopher McDonough
+ */
 public class PhotoSearchController implements Initializable {
     @FXML
     Button logoutBtn;
@@ -51,6 +55,9 @@ public class PhotoSearchController implements Initializable {
     DatePicker startDatePicker;
     @FXML
     DatePicker endDatePicker;
+    /**
+     * 
+     */
     @FXML
     ListView<Tag> searchedTagsLV;
 
@@ -61,10 +68,17 @@ public class PhotoSearchController implements Initializable {
     private ObservableList<Tag> obsList;
     private List<Tag> tagList = new ArrayList<Tag>();
 
+    /* (non-Javadoc)
+     * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public void initData() throws ClassNotFoundException, IOException {
 	obsList = FXCollections.observableArrayList(tagList);
 
@@ -153,8 +167,21 @@ public class PhotoSearchController implements Initializable {
 
 	addTagBtn.disableProperty().bind(bb);
 
+	stage.setOnCloseRequest(e -> {
+	    try {
+		saveData();
+	    } catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	});
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @FXML
     protected void backBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
@@ -170,6 +197,11 @@ public class PhotoSearchController implements Initializable {
 	stage.show();
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @FXML
     protected void logoutBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
 	Parent root;
@@ -187,6 +219,11 @@ public class PhotoSearchController implements Initializable {
 	loginStage.show();
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @FXML
     protected void searchBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotoSearchResult.fxml"));
@@ -205,6 +242,11 @@ public class PhotoSearchController implements Initializable {
 	stage.show();
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @FXML
     protected void removeTagBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
 	tagList.remove(searchedTagsLV.getSelectionModel().getSelectedItem());
@@ -212,6 +254,11 @@ public class PhotoSearchController implements Initializable {
 	searchedTagsLV.setItems(obsList);
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @FXML
     protected void addTagBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
 	tagList.add(new Tag(tagTypeTF.getText().trim(), tagValueTF.getText().trim()));
@@ -219,18 +266,30 @@ public class PhotoSearchController implements Initializable {
 	searchedTagsLV.setItems(obsList);
     }
 
+    /**
+     * @return
+     */
     public PhotoAlbumUsers getUserList() {
 	return userList;
     }
 
+    /**
+     * @param userList
+     */
     public void setUserList(PhotoAlbumUsers userList) {
 	this.userList = userList;
     }
 
+    /**
+     * @return
+     */
     public Stage getStage() {
 	return stage;
     }
 
+    /**
+     * @throws ClassNotFoundException
+     */
     private void saveData() throws ClassNotFoundException {
 	try {
 	    PhotoAlbumUsers.write(userList);
@@ -239,22 +298,37 @@ public class PhotoSearchController implements Initializable {
 	}
     }
 
+    /**
+     * @param stage
+     */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
+    /**
+     * @return
+     */
     public Album getCurrentAlbumChosen() {
 	return currentAlbumChosen;
     }
 
+    /**
+     * @param currentAlbumChosen
+     */
     public void setCurrentAlbumChosen(Album currentAlbumChosen) {
 	this.currentAlbumChosen = currentAlbumChosen;
     }
 
+    /**
+     * @return
+     */
     public User getCurrentUser() {
 	return currentUser;
     }
 
+    /**
+     * @param currentUser
+     */
     public void setCurrentUser(User currentUser) {
 	this.currentUser = currentUser;
     }

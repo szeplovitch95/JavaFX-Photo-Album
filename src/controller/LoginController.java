@@ -146,7 +146,7 @@ public class LoginController implements Initializable {
 
     /**
      * @param stage
-     *            Stage sets the Admin's controller stage to the stage param.
+     * Stage sets the Admin's controller stage to the stage param.
      */
 
     public void setStage(Stage stage) {

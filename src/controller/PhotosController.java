@@ -38,6 +38,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.*;
 
+/**
+ * @author Shachar Zeplovitch
+ * @author Christopher McDonough
+ */
 public class PhotosController implements Initializable {
     @FXML
     Button homeBtn;
@@ -70,11 +74,29 @@ public class PhotosController implements Initializable {
     private User currentUser;
     private ObservableList<Photo> obsList;
 
+    /* (non-Javadoc)
+     * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+    
+    
 
+    /**
+     * 
+     */
     public void refreshData() {
+	try {
+	    userList = PhotoAlbumUsers.read();
+	} catch (ClassNotFoundException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	
 	if (currentAlbumChosen.getSize() > 0) {
 	    nameLB.setText(currentAlbumChosen.getAlbumName());
 	    sizeLB.setText(currentAlbumChosen.getSize() + "");
@@ -84,9 +106,14 @@ public class PhotosController implements Initializable {
 	} else {
 	    oldestPhotoLB.setText("No photos in this album.");
 	    dateRangeLB.setText("No Photos in this album");
+	    sizeLB.setText(currentAlbumChosen.getSize() + "");
 	}
     }
 
+    /**
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public void initData() throws ClassNotFoundException, IOException {
 
 	obsList = FXCollections.observableArrayList(currentAlbumChosen.getPhotos());
@@ -102,8 +129,23 @@ public class PhotosController implements Initializable {
 	listViewPhotos.setItems(obsList);
 
 	refreshData();
+	
+	
+	stage.setOnCloseRequest(e -> {
+	    try {
+		saveData();
+	    } catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	});
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleHomeBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
@@ -112,12 +154,17 @@ public class PhotosController implements Initializable {
 	Scene homeScene = new Scene(root);
 	controller.setListOfUsers(userList);
 	controller.setUser(currentUser);
-	controller.initData();
 	controller.setStage(stage);
+	controller.initData();
 	stage.setScene(homeScene);
 	stage.show();
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleAddBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	FileChooser fileChooser = new FileChooser();
@@ -151,6 +198,11 @@ public class PhotosController implements Initializable {
 
 
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleRemoveBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	Photo p = this.listViewPhotos.getSelectionModel().getSelectedItem();
@@ -172,6 +224,11 @@ public class PhotosController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleMoveBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	Photo selectedPhoto = listViewPhotos.getSelectionModel().getSelectedItem();
@@ -257,6 +314,11 @@ public class PhotosController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleCopyBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	Photo selectedPhotoCpy = listViewPhotos.getSelectionModel().getSelectedItem();
@@ -479,6 +541,11 @@ public class PhotosController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleLogoutBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	Parent root;
@@ -496,38 +563,65 @@ public class PhotosController implements Initializable {
 	loginStage.show();
     }
 
+    /**
+     * @return
+     */
     public PhotoAlbumUsers getUsers() {
 	return this.userList;
     }
 
+    /**
+     * @return
+     */
     public ObservableList<Photo> getObsList() {
 	return obsList;
     }
 
+    /**
+     * @param stage
+     */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
+    /**
+     * @param u
+     */
     public void setListOfUsers(PhotoAlbumUsers u) {
 	this.userList = u;
     }
 
+    /**
+     * @return
+     */
     public Album getAlbum() {
 	return this.currentAlbumChosen;
     }
 
+    /**
+     * @param a
+     */
     public void setAlbum(Album a) {
 	this.currentAlbumChosen = a;
     }
 
+    /**
+     * @param u
+     */
     public void setUser(User u) {
 	this.currentUser = u;
     }
 
+    /**
+     * @return
+     */
     public User getUser() {
 	return this.currentUser;
     }
 
+    /**
+     * @throws ClassNotFoundException
+     */
     private void saveData() throws ClassNotFoundException {
 	try {
 	    PhotoAlbumUsers.write(userList);

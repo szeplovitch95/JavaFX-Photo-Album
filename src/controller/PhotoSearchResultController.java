@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import Main.AlertBox;
 import controller.PhotosController.CustomListViewCell;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
@@ -45,12 +46,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Album;
-import model.AlertBox;
 import model.Photo;
 import model.PhotoAlbumUsers;
 import model.Tag;
 import model.User;
 
+/**
+ * @author Shachar Zeplovitch
+ * @author Christopher McDonough
+ */
 public class PhotoSearchResultController implements Initializable {
     @FXML
     Button backToMainBtn;
@@ -68,7 +72,6 @@ public class PhotoSearchResultController implements Initializable {
     private User currentUser;
     private LocalDate startDate;
     private LocalDate endDate;
-
     private List<Photo> subsetPhotos = new ArrayList<Photo>();
     private List<Photo> allPhotos = new ArrayList<Photo>();
     private List<Tag> searchedTagsList;
@@ -77,6 +80,12 @@ public class PhotoSearchResultController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * @throws ClassNotFoundException
+     * @throws IOException
+     *             initializes the data necessary for the controller and scene
+     *             to work properly.
+     */
     public void initData() throws ClassNotFoundException, IOException {
 	allPhotos = getAllUserPhotos();
 	subsetPhotos = getSearchedPhotoList();
@@ -92,26 +101,40 @@ public class PhotoSearchResultController implements Initializable {
 	});
 
 	photoResultLV.setItems(obsList);
-
-	BooleanBinding bb = new BooleanBinding() {
-	    {
-		super.bind(photoResultLV.getProperties(), albumName.textProperty());
+	
+	stage.setOnCloseRequest(e -> {
+	    try {
+		saveData();
+	    } catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
 	    }
-
-	    @Override
-	    protected boolean computeValue() {
-		return (photoResultLV.getSelectionModel().isEmpty() || albumName.getText().trim().isEmpty());
-	    }
-	};
-
-	createNewAlbumBtn.disableProperty().bind(bb);
+	});
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     *             method that creates the new album based on the search results
+     *             and checks a few cases in which an album cannot be created.
+     */
     @FXML
     protected void createNewAlbumBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
+	if (albumName.getText().trim().isEmpty()) {
+	    AlertBox.display("No album name was provided", "Please provide an album name before creating a new album");
+	    return;
+	}
+
+	if (obsList.size() == 0) {
+	    AlertBox.display("Cannot create an empty album",
+		    "Search result is empty so a new album cannot be created at the moment.");
+	    return;
+	}
+
 	Album newAlbum = new Album(albumName.getText().trim());
-	
-	//Checks if the albums name already exists.
+
+	// Checks if the albums name already exists.
 	if (currentUser.getAlbumByName(newAlbum.getAlbumName()) != null) {
 	    AlertBox.display("Error: Duplicate Album Name", "Please pick a different name for you album.");
 	    return;
@@ -124,6 +147,10 @@ public class PhotoSearchResultController implements Initializable {
 	backToAlbumPage(null);
     }
 
+    /**
+     * @return newList List<Photo> method to create the new photo list which
+     *         will be used for the search results.
+     */
     private List<Photo> createNewPhotoList() {
 	List<Photo> newList = new ArrayList<Photo>();
 
@@ -139,6 +166,12 @@ public class PhotoSearchResultController implements Initializable {
 	return newList;
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * method that changes the scene/stage and goes back to the main page of the application.
+     */
     @FXML
     protected void backToMainBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
@@ -148,12 +181,18 @@ public class PhotoSearchResultController implements Initializable {
 	controller.setListOfUsers(userList);
 	controller.setUser(currentUser);
 	controller.setStage(stage);
-	controller.initData(); 
-	controller.setStage(stage);
+	controller.initData();
+	
 	stage.setScene(homeScene);
 	stage.show();
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     *	method that changes the scene and goes back to the album page of the current pictures.
+     */
     @FXML
     protected void backToAlbumPage(ActionEvent event) throws IOException, ClassNotFoundException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
@@ -164,11 +203,16 @@ public class PhotoSearchResultController implements Initializable {
 	controller.setUser(currentUser);
 	controller.setStage(stage);
 	controller.initData();
-	controller.setStage(stage);
+	
 	stage.setScene(homeScene);
 	stage.show();
     }
 
+    /**
+     * @return searchedPhotos List<Photo>
+     * iterates thru the all of the photos in the users albums and gets the searched ones.
+     */
+    
     private List<Photo> getSearchedPhotoList() {
 	if (searchedTagsList.size() == 0 && startDate == null && endDate == null) {
 	    return allPhotos;
@@ -178,6 +222,9 @@ public class PhotoSearchResultController implements Initializable {
 
 	for (Photo p : allPhotos) {
 	    if (isContainedInDateRange(startDate, endDate, p)) {
+		if (p.getTags().size() == 0) {
+		    searchedPhotos.add(p);
+		}
 		for (Tag t : p.getTags()) {
 		    for (Tag t2 : searchedTagsList) {
 			if (t.equals(t2)) {
@@ -191,6 +238,12 @@ public class PhotoSearchResultController implements Initializable {
 	return searchedPhotos;
     }
 
+    /**
+     * @param startDate LocalDate
+     * @param endDate LocalDate
+     * @param p Photo 
+     * @return false/true depending if the date is contained within the specified date range.
+     */
     private boolean isContainedInDateRange(LocalDate startDate, LocalDate endDate, Photo p) {
 	if (startDate == null && endDate == null) {
 	    return true;
@@ -226,13 +279,9 @@ public class PhotoSearchResultController implements Initializable {
 	StackPane stackPane = new StackPane();
 	ImageView imageView = new ImageView();
 	Label captionL = new Label();
-	Button editBtn = new Button("Edit");
-	Button viewBtn = new Button("View");
 
 	public CustomListViewCell() {
 	    super();
-	    editBtn.setMinWidth(100);
-	    viewBtn.setMinWidth(100);
 	    imageView.setFitWidth(100.0);
 	    imageView.setFitHeight(115.0);
 	    imageView.setPreserveRatio(true);
@@ -243,12 +292,7 @@ public class PhotoSearchResultController implements Initializable {
 	    AnchorPane.setLeftAnchor(stackPane, 0.0);
 	    AnchorPane.setLeftAnchor(captionL, 130.0);
 	    AnchorPane.setTopAnchor(captionL, 0.0);
-	    AnchorPane.setRightAnchor(editBtn, 0.0);
-	    AnchorPane.setRightAnchor(viewBtn, 0.0);
-	    AnchorPane.setBottomAnchor(viewBtn, 0.0);
-	    editBtn.setVisible(false);
-	    viewBtn.setVisible(false);
-	    anchorPane.getChildren().addAll(stackPane, captionL, editBtn, viewBtn);
+	    anchorPane.getChildren().addAll(stackPane, captionL);
 	    anchorPane.setPrefHeight(115.0);
 	    captionL.setMaxWidth(300.0);
 	    setGraphic(anchorPane);
@@ -263,8 +307,6 @@ public class PhotoSearchResultController implements Initializable {
 	    if (photo == null) {
 		imageView.setImage(null);
 		captionL.setText("");
-		editBtn.setVisible(false);
-		viewBtn.setVisible(false);
 	    }
 
 	    if (photo != null) {
@@ -278,106 +320,37 @@ public class PhotoSearchResultController implements Initializable {
 
 		Image image = SwingFXUtils.toFXImage(bufferedImage, null);
 		imageView.setImage(image);
-		viewBtn.setVisible(true);
-		editBtn.setVisible(true);
 		captionL.setText("Caption: " + photo.getCaption());
-
-		editBtn.setOnAction(e -> {
-		    editAction(e, photo);
-		});
-
-		viewBtn.setOnAction(e -> {
-		    try {
-			viewAction(e, photo);
-		    } catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		    }
-		});
 	    }
-	}
-
-	@FXML
-	public void editAction(ActionEvent e, Photo p) {
-	    Dialog<Boolean> dialog = new Dialog<>();
-	    dialog.initModality(Modality.APPLICATION_MODAL);
-	    dialog.setTitle("Edit Photo");
-	    dialog.setResizable(false);
-	    dialog.setHeaderText("Edit Photo:");
-
-	    Label photoCaption = new Label("Photo's Caption: ");
-	    TextField photoCaptionTF = new TextField(p.getCaption());
-	    Label photoTags = new Label("Photo's Tags: ");
-	    TextField photoTagsTF = new TextField(p.getTags().toString());
-
-	    Platform.runLater(() -> photoCaptionTF.requestFocus());
-
-	    GridPane gridPane = new GridPane();
-	    gridPane.add(photoCaption, 1, 1);
-	    gridPane.add(photoCaptionTF, 2, 1);
-
-	    gridPane.add(photoTags, 1, 2);
-	    gridPane.add(photoTagsTF, 2, 2);
-	    dialog.getDialogPane().setContent(gridPane);
-
-	    ButtonType saveBtn = new ButtonType("Save", ButtonData.OK_DONE);
-	    ButtonType cancelBtn = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-	    dialog.getDialogPane().getButtonTypes().addAll(saveBtn, cancelBtn);
-
-	    Optional<Boolean> dResult = dialog.showAndWait();
-
-	    if (dResult.isPresent()) {
-		p.setCaption(photoCaptionTF.getText());
-		updateItem(p, true);
-		obsList.setAll(currentAlbumChosen.getPhotos());
-		photoResultLV.setItems(obsList);
-		try {
-		    PhotoAlbumUsers.write(userList);
-		} catch (IOException o) {
-		    o.printStackTrace();
-		}
-	    }
-	}
-
-	@FXML
-	public void viewAction(ActionEvent e, Photo p) throws IOException {
-	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotosSlideshow.fxml"));
-	    Parent root = loader.load();
-
-	    SlideshowController controller = loader.getController();
-	    controller.setUserList(userList);
-	    controller.setCurrentPhoto(p);
-	    controller.setCurrentAlbumChosen(currentAlbumChosen);
-	    controller.setCurrentUser(currentUser);
-	    controller.setStage(stage);
-
-	    Scene slideshowScene = new Scene(root);
-	    try {
-		controller.initData();
-	    } catch (ClassNotFoundException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	    }
-
-	    stage.setScene(slideshowScene);
-
-	    stage.show();
-
 	}
     }
 
+    /**
+     * @return userList PhotoAlbumUsers 
+     */
     public PhotoAlbumUsers getUserList() {
 	return userList;
     }
 
+    /**
+     * @param userList PhotoAlbumUsers
+     * sets the current userList to the param passed into this function.
+     */
     public void setUserList(PhotoAlbumUsers userList) {
 	this.userList = userList;
     }
 
+    /**
+     * @return stage Stage
+     */
     public Stage getStage() {
 	return stage;
     }
 
+    /**
+     * @throws ClassNotFoundException
+     * saves the data by serializing it and writing it to the .dat file of the application.
+     */
     private void saveData() throws ClassNotFoundException {
 	try {
 	    PhotoAlbumUsers.write(userList);
@@ -386,18 +359,33 @@ public class PhotoSearchResultController implements Initializable {
 	}
     }
 
+    /**
+     * @param stage
+     * sets the current stage to the param passed into this function.
+     */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
+    /**
+     * @return currentAlbumChosen Album.
+     */
     public Album getCurrentAlbumChosen() {
 	return currentAlbumChosen;
     }
 
+    /**
+     * @param currentAlbumChosen
+     * sets the currentAlbumChosen to the param passed into this function.
+     */
     public void setCurrentAlbumChosen(Album currentAlbumChosen) {
 	this.currentAlbumChosen = currentAlbumChosen;
     }
 
+    /**
+     * @return List<photo> userPhotoList 
+     * returns all of the photos of the current user.
+     */
     private List<Photo> getAllUserPhotos() {
 	List<Photo> userPhotoList = new ArrayList<Photo>();
 
@@ -410,34 +398,62 @@ public class PhotoSearchResultController implements Initializable {
 	return userPhotoList;
     }
 
+    /**
+     * @return currentUser User
+     */
     public User getCurrentUser() {
 	return currentUser;
     }
 
+    /**
+     * @param currentUser
+     * sets the curent user to the param.
+     */
     public void setCurrentUser(User currentUser) {
 	this.currentUser = currentUser;
     }
 
+    /**
+     * @return searchedTagsList List<Tag>
+     */
     public List<Tag> getSearchedTagsList() {
 	return searchedTagsList;
     }
 
+    /**
+     * @param searchedTagsList
+     * sets the searchedTagsList to the param.
+     */
     public void setSearchedTagsList(List<Tag> searchedTagsList) {
 	this.searchedTagsList = searchedTagsList;
     }
 
+    /**
+     * @return startDate LocalDate
+     */
     public LocalDate getStartDate() {
 	return startDate;
     }
 
+    /**
+     * @param startDatePicker
+     * sets the start date of the search result parameter to the param passed into this function.
+     */
     public void setStartDate(LocalDate startDatePicker) {
 	this.startDate = startDatePicker;
     }
 
+    /**
+     * @return endDate LocalDate
+     */
     public LocalDate getEndDate() {
 	return endDate;
     }
 
+    /**
+     * @param endDate LocalDate
+     * returns the endDate of the search result parameter to the param passed into this function.
+     */
     public void setEndDate(LocalDate endDate) {
 	this.endDate = endDate;
     }

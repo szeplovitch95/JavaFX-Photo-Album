@@ -9,6 +9,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * @author Shachar Zeplovitch
+ * @author Christopher McDonough
+ */
 public class PhotoAlbumUsers implements Serializable {
 
     /**
@@ -24,18 +28,31 @@ public class PhotoAlbumUsers implements Serializable {
 	users = new ArrayList<User>();
     }
 
+    /**
+     * @param user
+     */
     public void addUser(User user) {
 	users.add(user);
     }
 
+    /**
+     * @return
+     */
     public ArrayList<User> getUsers() {
 	return users;
     }
 
+    /**
+     * @param user
+     */
     public void removeUser(User user) {
 	users.remove(user);
     }
 
+    /**
+     * @param username
+     * @return
+     */
     public User getUserByUsername(String username) {
 	for (User u : users) {
 	    if (username.trim().equals(u.getUsername())) {
@@ -46,6 +63,10 @@ public class PhotoAlbumUsers implements Serializable {
 	return null;
     }
 
+    /**
+     * @param username
+     * @return
+     */
     public boolean isUsernameTaken(String username) {
 	for (User u : users) {
 	    if (username.equals(u.getUsername())) {
@@ -56,6 +77,11 @@ public class PhotoAlbumUsers implements Serializable {
 	return false;
     }
 
+    /**
+     * @param username
+     * @param password
+     * @return
+     */
     public boolean userExists(String username, String password) {
 	for (User u : users) {
 	    if (username.equals(u.getUsername()) && password.equals(u.getPassword())) {
@@ -66,6 +92,9 @@ public class PhotoAlbumUsers implements Serializable {
 	return false;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     public String toString() {
 	String userList = "";
 
@@ -79,6 +108,11 @@ public class PhotoAlbumUsers implements Serializable {
 	return userList;
     }
 
+    /**
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static PhotoAlbumUsers read() throws IOException, ClassNotFoundException {
 	ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
 	PhotoAlbumUsers listOfAllUsers = (PhotoAlbumUsers) ois.readObject();
@@ -86,6 +120,10 @@ public class PhotoAlbumUsers implements Serializable {
 	return listOfAllUsers;
     }
 
+    /**
+     * @param listOfAllUsers
+     * @throws IOException
+     */
     public static void write(PhotoAlbumUsers listOfAllUsers) throws IOException {
 	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
 	oos.writeObject(listOfAllUsers);

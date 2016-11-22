@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import Main.AlertBox;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -94,11 +96,19 @@ public class AdminController implements Initializable {
 		}
 	    }
 	});
+	
+	stage.setOnCloseRequest(e -> {
+	    try {
+		saveData();
+	    } catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	});
     }
 
     /**
-     * @param event
-     *            ActionEvent.
+     * @param event ActionEvent.
      * @throws ClassNotFoundException
      *             This method catches the user's click event to create a new
      *             user and creates a new dialog for the user.
@@ -223,7 +233,7 @@ public class AdminController implements Initializable {
 
     /**
      * @throws ClassNotFoundException
-     *             This method saves the data of all users.
+     * This method saves the data of all users.
      */
 
     private void saveData() throws ClassNotFoundException {
@@ -236,7 +246,7 @@ public class AdminController implements Initializable {
 
     /**
      * @param stage
-     *            Stage sets the Admin's controller stage to the stage param.
+     * Stage sets the Admin's controller stage to the stage param.
      */
 
     public void setStage(Stage stage) {

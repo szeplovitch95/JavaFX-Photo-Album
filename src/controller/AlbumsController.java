@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import Main.AlertBox;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -34,10 +36,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Album;
-import model.AlertBox;
 import model.PhotoAlbumUsers;
 import model.User;
 
+/**
+ * @author Shachar Zeplovitch
+ * @author Christopher McDonough
+ */
 public class AlbumsController implements Initializable {
     private PhotoAlbumUsers listOfAllUsers;
     private Stage stage;
@@ -66,6 +71,11 @@ public class AlbumsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * @throws ClassNotFoundException
+     * @throws IOException
+     * initialize the required data needed for this scene to be working properly.
+     */
     public void initData() throws ClassNotFoundException, IOException {
 	// listOfAllUsers = PhotoAlbumUsers.read();
 	obsList = FXCollections.observableArrayList(currentUser.getAlbums());
@@ -95,12 +105,31 @@ public class AlbumsController implements Initializable {
 	renameBtn.disableProperty().bind(Bindings.size(obsList).isEqualTo(0));
 	removeBtn.disableProperty().bind(Bindings.size(obsList).isEqualTo(0));
 	openBtn.disableProperty().bind(Bindings.size(obsList).isEqualTo(0));
+	
+	stage.setOnCloseRequest(e -> {
+	    try {
+		saveData();
+	    } catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	});
     }
 
+    /**
+     * @param username
+     * sets the current user logged in the system to the paramters passed in.
+     */
     public void setCurrentUser(String username) {
 	currentUser = listOfAllUsers.getUserByUsername(username);
     }
     
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     * changes the scene to the search view when the user clicks the search button.
+     */
     @FXML
     protected void handleSearchBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotoSearch.fxml"));
@@ -109,12 +138,17 @@ public class AlbumsController implements Initializable {
 	Scene homeScene = new Scene(root);
 	controller.setUserList(listOfAllUsers);
 	controller.setCurrentUser(currentUser);
-	controller.initData();
 	controller.setStage(stage);
+	controller.initData();
 	stage.setScene(homeScene);
 	stage.show();
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * opens up a new dialog for creating a new album for the logged in user.
+     */
     @FXML
     private void createNewAlbum(ActionEvent event) throws ClassNotFoundException {
 	Dialog<Album> dialog = new Dialog<>();
@@ -178,10 +212,20 @@ public class AlbumsController implements Initializable {
 	}
     }
 
+    
+    /**
+     * @return this.currentUser User
+     * returns the current user logged in.
+     */
     public User getUser() {
-	return currentUser;
+	return this.currentUser;
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * opens a dialog to rename the selected album in the list of albums.
+     */
     @FXML
     private void renameAlbum(ActionEvent event) throws ClassNotFoundException {
 	Dialog<String> dialog = new Dialog<>();
@@ -254,6 +298,11 @@ public class AlbumsController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * removes an album from the list of albums of the current user.
+     */
     @FXML
     private void removeAlbum(ActionEvent event) throws ClassNotFoundException {
 	Album a = listView.getSelectionModel().getSelectedItem();
@@ -268,6 +317,11 @@ public class AlbumsController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     private void openAlbum(ActionEvent event) throws ClassNotFoundException, IOException {
 	Parent root;
@@ -290,14 +344,28 @@ public class AlbumsController implements Initializable {
 	stage.show();
     }
 
+    /**
+     * @param stage Stage
+     * sets the current stage of the program.
+     */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
+    /**
+     * @param u PhotoAlbumUsers 
+     * sets the current list of users of the program.
+     */
     public void setListOfUsers(PhotoAlbumUsers u) {
 	listOfAllUsers = u;
     }
 
+    /**
+     * @param event
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * performs the logging out function of the window.
+     */
     @FXML
     private void loggingOut(ActionEvent event) throws IOException, ClassNotFoundException {
 	Parent root;
@@ -317,14 +385,25 @@ public class AlbumsController implements Initializable {
 	logoutStage.show();
     }
 
+    /**
+     *  closes the admin app window.
+     */
     private void closeAdminAppWindow() {
 	stage.close();
     }
 
+    /**
+     * @param u User
+     * sets the current user to the paramter.
+     */
     public void setUser(User u) {
 	this.currentUser = u;
     }
 
+    /**
+     * @throws ClassNotFoundException
+     * saves the data by serializing it to the dat file of the project.
+     */
     private void saveData() throws ClassNotFoundException {
 	try {
 	    PhotoAlbumUsers.write(listOfAllUsers);

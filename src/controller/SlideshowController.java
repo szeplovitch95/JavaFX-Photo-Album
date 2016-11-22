@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import Main.AlertBox;
 import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -36,6 +37,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.*;
 
+/**
+ * @author Shachar Zeplovitch
+ * @author Christopher McDonough
+ */
 public class SlideshowController implements Initializable {
     @FXML
     Button homeBtn;
@@ -68,11 +73,18 @@ public class SlideshowController implements Initializable {
     private Photo currentPhoto;
     private Tag tagSelected;
 
+    /* (non-Javadoc)
+     * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 	// TODO Auto-generated method stub
     }
 
+    /**
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public void initData() throws ClassNotFoundException, IOException {
 	captionLB.setText(currentPhoto.getCaption());
 	dateLB.setText(currentPhoto.getPhotoDateAndTime().toString());
@@ -101,8 +113,21 @@ public class SlideshowController implements Initializable {
 	});
 
 	refreshImage();
+	
+	stage.setOnCloseRequest(e -> {
+	    try {
+		saveData();
+		System.out.println("saved");
+	    } catch (ClassNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	    }
+	});
     }
 
+    /**
+     * @throws IOException
+     */
     public void refreshImage() throws IOException {
 	imageView.setFitWidth(606);
 	imageView.setFitHeight(413);
@@ -117,6 +142,11 @@ public class SlideshowController implements Initializable {
 	captionLB.setText(currentPhoto.getCaption());
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleHomeBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AlbumPhotosList.fxml"));
@@ -128,11 +158,15 @@ public class SlideshowController implements Initializable {
 	controller.setAlbum(currentAlbumChosen);
 	controller.setStage(stage);
 	controller.initData();
-	controller.setStage(stage);
 	stage.setScene(homeScene);
 	stage.show();
     }
 
+    /**
+     * @param event
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     @FXML
     protected void handleLogoutBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
 	Parent root;
@@ -150,6 +184,9 @@ public class SlideshowController implements Initializable {
 	loginStage.show();
     }
 
+    /**
+     * @param event
+     */
     @FXML
     protected void handleAddTagBtnAction(ActionEvent event) {
 	Dialog<Tag> dialog = new Dialog<>();
@@ -222,6 +259,9 @@ public class SlideshowController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     */
     @FXML
     protected void handleRemoveTagBtnAction(ActionEvent event) {
 	tagSelected = tagsLV.getSelectionModel().getSelectedItem();
@@ -237,6 +277,9 @@ public class SlideshowController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     */
     @FXML
     protected void previousBtnAction(ActionEvent event) {
 	currentPhoto = currentAlbumChosen.previousPhoto(currentPhoto);
@@ -247,6 +290,9 @@ public class SlideshowController implements Initializable {
 	}
     }
 
+    /**
+     * @param event
+     */
     @FXML
     protected void nextBtnAction(ActionEvent event) {
 	currentPhoto = currentAlbumChosen.nextPhoto(currentPhoto);
@@ -257,22 +303,37 @@ public class SlideshowController implements Initializable {
 	}
     }
 
+    /**
+     * @param p
+     */
     public void setCurrentPhoto(Photo p) {
 	currentPhoto = p;
     }
 
+    /**
+     * @return
+     */
     public PhotoAlbumUsers getUserList() {
 	return userList;
     }
 
+    /**
+     * @param userList
+     */
     public void setUserList(PhotoAlbumUsers userList) {
 	this.userList = userList;
     }
 
+    /**
+     * @return
+     */
     public Stage getStage() {
 	return stage;
     }
 
+    /**
+     * @throws ClassNotFoundException
+     */
     private void saveData() throws ClassNotFoundException {
 	try {
 	    PhotoAlbumUsers.write(userList);
@@ -281,26 +342,44 @@ public class SlideshowController implements Initializable {
 	}
     }
 
+    /**
+     * @param stage
+     */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
+    /**
+     * @return
+     */
     public Album getCurrentAlbumChosen() {
 	return currentAlbumChosen;
     }
 
+    /**
+     * @param currentAlbumChosen
+     */
     public void setCurrentAlbumChosen(Album currentAlbumChosen) {
 	this.currentAlbumChosen = currentAlbumChosen;
     }
 
+    /**
+     * @return
+     */
     public User getCurrentUser() {
 	return currentUser;
     }
 
+    /**
+     * @param currentUser
+     */
     public void setCurrentUser(User currentUser) {
 	this.currentUser = currentUser;
     }
 
+    /**
+     * @return
+     */
     public Photo getCurrentPhoto() {
 	return currentPhoto;
     }
