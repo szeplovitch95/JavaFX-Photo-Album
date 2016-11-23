@@ -71,7 +71,7 @@ public class AdminController implements Initializable {
 		    protected void updateItem(User user, boolean empty) {
 			super.updateItem(user, empty);
 			if (user != null) {
-			    setText(user.getUsername());
+			    setText("Username: " + user.getUsername() + "    Password: " + user.getPassword());
 			} else {
 			    setText(null);
 			}
