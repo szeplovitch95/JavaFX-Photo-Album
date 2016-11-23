@@ -26,35 +26,38 @@ public class Photo implements Serializable {
     }
 
     /**
-     * @return
+     * @return caption String.
      */
     public String getCaption() {
 	return caption;
     }
 
     /**
-     * @param caption
+     * @param caption String 
+     * sets the caption of the Photo to the String param passed in.
      */
     public void setCaption(String caption) {
 	this.caption = caption;
     }
 
     /**
-     * @return
+     * @return imageFile File
      */
     public File getImage() {
 	return imageFile;
     }
 
     /**
-     * @param imageFile
+     * @param imageFile File 
+     * sets the imageFile to the param imageFile passed in.
      */
     public void setImageFile(File imageFile) {
 	this.imageFile = imageFile;
     }
 
     /**
-     * @return
+     * @return date of the photo which is of type String
+     * calculates and seperates the Calendar type into an array of chars to be returned.
      */
     public String getDate() {
 	String[] dateArr = photoDateAndTime.getTime().toString().split("\\s+");
@@ -62,21 +65,23 @@ public class Photo implements Serializable {
     }
 
     /**
-     * @return
+     * @return parentAlbums List<Album>
      */
     public List<Album> getParentAlbums() {
 	return parentAlbums;
     }
 
     /**
-     * @param pAlbum
+     * @param pAlbum Album 
+     * adds an album to the list of parent albums.
      */
     public void addParentAlbum(Album pAlbum) {
 	parentAlbums.add(pAlbum);
     }
 
     /**
-     * @param pAlbum
+     * @param pAlbum Album 
+     * removes an album of the list of all parent albums.
      */
     public void removeParentAlbum(Album pAlbum) {
 	parentAlbums.remove(pAlbum);
@@ -84,43 +89,48 @@ public class Photo implements Serializable {
 
     /**
      * @param pAlbum
-     * @return
+     * @return true if the album exists 
+     * @return false if the album does not exists.
      */
     public boolean parentAlbumExists(Album pAlbum) {
 	return parentAlbums.contains(pAlbum);
     }
 
     /**
-     * @return
+     * @return tags List<Tag>
      */
     public List<Tag> getTags() {
 	return tags;
     }
 
     /**
-     * @param tags
+     * @param tags List<Tag>
+     * sets the tags to the tags parameter.
      */
     public void setTags(List<Tag> tags) {
 	this.tags = tags;
     }
 
     /**
-     * @param t
+     * @param t Tag
+     * adds a tag to the tags list
      */
     public void addTag(Tag t) {
 	tags.add(t);
     }
 
     /**
-     * @param t
+     * @param t Tag
+     * removes a tag from the tags list.
      */
     public void removeTag(Tag t) {
 	tags.remove(t);
     }
 
     /**
-     * @param t
-     * @return
+     * @param t Tag
+     * @return true if the tag exists in the list of tags
+     * @return false if the tag does not exist in the list of tags.
      */
     public boolean tagExists(Tag t) {
 	for (Tag t1 : this.tags) {
@@ -133,14 +143,15 @@ public class Photo implements Serializable {
     }
 
     /**
-     * @return
+     * @return photoDateAndTime Calendar
      */
     public Calendar getPhotoDateAndTime() {
 	return photoDateAndTime;
     }
 
     /**
-     * @param photoDateAndTime
+     * @param photoDateAndTime Calendar
+     * sets the photoDateAndTime to the param passed into the method.
      */
     public void setPhotoDateAndTime(Calendar photoDateAndTime) {
 	this.photoDateAndTime = photoDateAndTime;

@@ -84,7 +84,7 @@ public class PhotosController implements Initializable {
     
 
     /**
-     * 
+     * refreshes the specified album data about its size, name, etc......
      */
     public void refreshData() {
 	try {
@@ -113,6 +113,7 @@ public class PhotosController implements Initializable {
     /**
      * @throws ClassNotFoundException
      * @throws IOException
+     * initalizes the necessary data of photos controller 
      */
     public void initData() throws ClassNotFoundException, IOException {
 
@@ -145,6 +146,7 @@ public class PhotosController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * returns back to the home page of the application.
      */
     @FXML
     protected void handleHomeBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -164,6 +166,7 @@ public class PhotosController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * adds a new image to the album by opening the file explorer.
      */
     @FXML
     protected void handleAddBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -202,6 +205,7 @@ public class PhotosController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * removes the selected image from te images list view of the current scene.
      */
     @FXML
     protected void handleRemoveBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -228,6 +232,7 @@ public class PhotosController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * opens a new dialog to handle moving the selected image to another album.
      */
     @FXML
     protected void handleMoveBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -318,6 +323,7 @@ public class PhotosController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * opens up a dialog to copy the selected image to a different album.
      */
     @FXML
     protected void handleCopyBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -475,7 +481,13 @@ public class PhotosController implements Initializable {
 		});
 	    }
 	}
+	
 
+	/**
+	 * @param e
+	 * @param p
+	 * opens a dialog to edit the caption of the selected image.
+	 */
 	@FXML
 	public void editAction(ActionEvent e, Photo p) {
 	    Dialog<Boolean> dialog = new Dialog<>();
@@ -514,6 +526,13 @@ public class PhotosController implements Initializable {
 	    }
 	}
 
+	
+	/**
+	 * @param e
+	 * @param p
+	 * @throws IOException
+	 * opens the slide show controller fxml file to view photos in an enlarged view 
+	 */
 	@FXML
 	public void viewAction(ActionEvent e, Photo p) throws IOException {
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PhotosSlideshow.fxml"));
@@ -545,6 +564,7 @@ public class PhotosController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * logs out of the system.
      */
     @FXML
     protected void handleLogoutBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -564,56 +584,60 @@ public class PhotosController implements Initializable {
     }
 
     /**
-     * @return
+     * @return this.userList PhotoAlbumUsers
      */
     public PhotoAlbumUsers getUsers() {
 	return this.userList;
     }
 
     /**
-     * @return
+     * @return obsList ObservableList<Photo>
      */
     public ObservableList<Photo> getObsList() {
 	return obsList;
     }
 
     /**
-     * @param stage
+     * @param stage 
+     * sets the current stage to the param passed in.
      */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
     /**
-     * @param u
+     * @param u PhotoAlbumUsers
+     * sets the current list of users to the param.
      */
     public void setListOfUsers(PhotoAlbumUsers u) {
 	this.userList = u;
     }
 
     /**
-     * @return
+     * @return this.currentAlbumChosen Album
      */
     public Album getAlbum() {
 	return this.currentAlbumChosen;
     }
 
     /**
-     * @param a
+     * @param a Album 
+     * sets the current album to the param album passed in.
      */
     public void setAlbum(Album a) {
 	this.currentAlbumChosen = a;
     }
 
     /**
-     * @param u
+     * @param u User
+     * sets the current user to the param User u.
      */
     public void setUser(User u) {
 	this.currentUser = u;
     }
 
     /**
-     * @return
+     * @return this.currentUser User
      */
     public User getUser() {
 	return this.currentUser;
@@ -621,6 +645,7 @@ public class PhotosController implements Initializable {
 
     /**
      * @throws ClassNotFoundException
+     * saves the data to the serialized file .dat
      */
     private void saveData() throws ClassNotFoundException {
 	try {

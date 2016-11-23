@@ -38,7 +38,7 @@ public class PhotoAlbum extends Application {
 			}
 			
 			PhotoAlbumUsers userList = PhotoAlbumUsers.read();		
-			System.out.println(userList.toString());
+//			System.out.println(userList.toString());
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/Login.fxml"));
 			Parent root = (Parent)loader.load();

@@ -78,6 +78,7 @@ public class PhotoSearchController implements Initializable {
     /**
      * @throws ClassNotFoundException
      * @throws IOException
+     * initializes the necessary data needed for the PhotoSearchController to work properly.
      */
     public void initData() throws ClassNotFoundException, IOException {
 	obsList = FXCollections.observableArrayList(tagList);
@@ -181,6 +182,7 @@ public class PhotoSearchController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
+     * returns back to the previous window.
      */
     @FXML
     protected void backBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
@@ -201,6 +203,7 @@ public class PhotoSearchController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
+     * logs out the system.
      */
     @FXML
     protected void logoutBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
@@ -223,6 +226,7 @@ public class PhotoSearchController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
+     * switches to the search fxml view file by clicking the search button.
      */
     @FXML
     protected void searchBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
@@ -246,6 +250,7 @@ public class PhotoSearchController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
+     * removes the selected album from the user's current albums.
      */
     @FXML
     protected void removeTagBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
@@ -258,6 +263,7 @@ public class PhotoSearchController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
+     * function that adds a new tag to the current photo displayed.
      */
     @FXML
     protected void addTagBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
@@ -267,21 +273,22 @@ public class PhotoSearchController implements Initializable {
     }
 
     /**
-     * @return
+     * @return userList PhotoAlbumUsers
      */
     public PhotoAlbumUsers getUserList() {
 	return userList;
     }
 
     /**
-     * @param userList
+     * @param userList 
+     * sets the current userList to the param passed in.
      */
     public void setUserList(PhotoAlbumUsers userList) {
 	this.userList = userList;
     }
 
     /**
-     * @return
+     * @return stage Stage
      */
     public Stage getStage() {
 	return stage;
@@ -289,6 +296,7 @@ public class PhotoSearchController implements Initializable {
 
     /**
      * @throws ClassNotFoundException
+     * saves all of the data into the .dat file.
      */
     private void saveData() throws ClassNotFoundException {
 	try {
@@ -299,28 +307,30 @@ public class PhotoSearchController implements Initializable {
     }
 
     /**
-     * @param stage
+     * @param stage Stage 
+     * sets the current stage to the param 
      */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
     /**
-     * @return
+     * @return currentAlbumChosen Album
      */
     public Album getCurrentAlbumChosen() {
 	return currentAlbumChosen;
     }
 
     /**
-     * @param currentAlbumChosen
+     * @param currentAlbumChosen 
+     * sets the currentAlbumChosen to the param passed in.
      */
     public void setCurrentAlbumChosen(Album currentAlbumChosen) {
 	this.currentAlbumChosen = currentAlbumChosen;
     }
 
     /**
-     * @return
+     * @return currentUser User.
      */
     public User getCurrentUser() {
 	return currentUser;
@@ -328,6 +338,7 @@ public class PhotoSearchController implements Initializable {
 
     /**
      * @param currentUser
+     * sets the currentUser to the param.
      */
     public void setCurrentUser(User currentUser) {
 	this.currentUser = currentUser;

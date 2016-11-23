@@ -84,6 +84,7 @@ public class SlideshowController implements Initializable {
     /**
      * @throws ClassNotFoundException
      * @throws IOException
+     * initalizes the data necessary for the SlideShow Controller to work properly.
      */
     public void initData() throws ClassNotFoundException, IOException {
 	captionLB.setText(currentPhoto.getCaption());
@@ -127,6 +128,7 @@ public class SlideshowController implements Initializable {
 
     /**
      * @throws IOException
+     * refreshes the image ImageView displayed in the top of the page.
      */
     public void refreshImage() throws IOException {
 	imageView.setFitWidth(606);
@@ -146,6 +148,7 @@ public class SlideshowController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * returns to the home page.
      */
     @FXML
     protected void handleHomeBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -166,6 +169,7 @@ public class SlideshowController implements Initializable {
      * @param event
      * @throws ClassNotFoundException
      * @throws IOException
+     * this function logs out of the system and returns to the initial page of the application
      */
     @FXML
     protected void handleLogoutBtnAction(ActionEvent event) throws ClassNotFoundException, IOException {
@@ -186,6 +190,7 @@ public class SlideshowController implements Initializable {
 
     /**
      * @param event
+     * adds a tag to the current photo.
      */
     @FXML
     protected void handleAddTagBtnAction(ActionEvent event) {
@@ -261,6 +266,7 @@ public class SlideshowController implements Initializable {
 
     /**
      * @param event
+     * removes the selected tag for the current photo displayed.
      */
     @FXML
     protected void handleRemoveTagBtnAction(ActionEvent event) {
@@ -278,7 +284,8 @@ public class SlideshowController implements Initializable {
     }
 
     /**
-     * @param event
+     * @param event 
+     * switches the image displayed to the previously image in the array list.
      */
     @FXML
     protected void previousBtnAction(ActionEvent event) {
@@ -292,6 +299,7 @@ public class SlideshowController implements Initializable {
 
     /**
      * @param event
+     * switches the image displayed to the next image in the array list.
      */
     @FXML
     protected void nextBtnAction(ActionEvent event) {
@@ -304,14 +312,15 @@ public class SlideshowController implements Initializable {
     }
 
     /**
-     * @param p
+     * @param p 
+     * sets the currentPhoto to the param p.
      */
     public void setCurrentPhoto(Photo p) {
 	currentPhoto = p;
     }
 
     /**
-     * @return
+     * @return userList PhotoAlbumUsers
      */
     public PhotoAlbumUsers getUserList() {
 	return userList;
@@ -319,13 +328,14 @@ public class SlideshowController implements Initializable {
 
     /**
      * @param userList
+     * sets the current list of users to the param passed in.
      */
     public void setUserList(PhotoAlbumUsers userList) {
 	this.userList = userList;
     }
 
     /**
-     * @return
+     * @return stage Stage
      */
     public Stage getStage() {
 	return stage;
@@ -333,6 +343,7 @@ public class SlideshowController implements Initializable {
 
     /**
      * @throws ClassNotFoundException
+     * saves the data into the serialized .dat file.
      */
     private void saveData() throws ClassNotFoundException {
 	try {
@@ -343,42 +354,45 @@ public class SlideshowController implements Initializable {
     }
 
     /**
-     * @param stage
+     * @param stage 
+     * sets the current stage to the param.
      */
     public void setStage(Stage stage) {
 	this.stage = stage;
     }
 
     /**
-     * @return
+     * @return currentAlbumChosen Album
      */
     public Album getCurrentAlbumChosen() {
 	return currentAlbumChosen;
     }
 
     /**
-     * @param currentAlbumChosen
+     * @param currentAlbumChosen 
+     * sets the current album chosen to the param passed in
      */
     public void setCurrentAlbumChosen(Album currentAlbumChosen) {
 	this.currentAlbumChosen = currentAlbumChosen;
     }
 
     /**
-     * @return
+     * @return currentUser User.
      */
     public User getCurrentUser() {
 	return currentUser;
     }
 
     /**
-     * @param currentUser
+     * @param currentUser 
+     * sets the currentUser of the application to the param passed into this function.
      */
     public void setCurrentUser(User currentUser) {
 	this.currentUser = currentUser;
     }
 
     /**
-     * @return
+     * @return currentPhoto Photo
      */
     public Photo getCurrentPhoto() {
 	return currentPhoto;

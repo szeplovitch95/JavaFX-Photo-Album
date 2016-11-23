@@ -20,36 +20,39 @@ public class Tag implements Serializable {
     }
 
     /**
-     * @return
+     * @return tagType String
      */
     public String getTagType() {
 	return tagType;
     }
 
     /**
-     * @param tagType
+     * @param tagType String
+     * sets the tagType to the string argument.
      */
     public void setTagType(String tagType) {
 	this.tagType = tagType;
     }
 
     /**
-     * @return
+     * @return tagValue String
      */
     public String getTagValue() {
 	return tagValue;
     }
 
     /**
-     * @param tagValue
+     * @param tagValue String
+     * sets the tagValue to the string argument.
      */
     public void setTagValue(String tagValue) {
 	this.tagValue = tagValue;
     }
 
     /**
-     * @param t
-     * @return
+     * @param t Tag
+     * @return true if the tag equals to the other tag 
+     * returns false if they are not equal.
      */
     public boolean equals(Tag t) {
 	if (t == null) {

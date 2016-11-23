@@ -96,7 +96,7 @@ public class AdminController implements Initializable {
 		}
 	    }
 	});
-	
+
 	stage.setOnCloseRequest(e -> {
 	    try {
 		saveData();
@@ -108,7 +108,8 @@ public class AdminController implements Initializable {
     }
 
     /**
-     * @param event ActionEvent.
+     * @param event
+     *            ActionEvent.
      * @throws ClassNotFoundException
      *             This method catches the user's click event to create a new
      *             user and creates a new dialog for the user.
@@ -207,6 +208,7 @@ public class AdminController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
+     *             logs out of the admin subsytem of the application
      */
 
     @FXML
@@ -233,7 +235,7 @@ public class AdminController implements Initializable {
 
     /**
      * @throws ClassNotFoundException
-     * This method saves the data of all users.
+     *             This method saves the data of all users.
      */
 
     private void saveData() throws ClassNotFoundException {
@@ -246,7 +248,7 @@ public class AdminController implements Initializable {
 
     /**
      * @param stage
-     * Stage sets the Admin's controller stage to the stage param.
+     *            Stage sets the Admin's controller stage to the stage param.
      */
 
     public void setStage(Stage stage) {

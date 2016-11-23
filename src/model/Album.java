@@ -28,7 +28,8 @@ public class Album implements Serializable {
     }
 
     /**
-     * @param albumName
+     * @param albumName String 
+     * creates a new album with the specified name passed into the constructor.
      */
     public Album(String albumName) {
 	photos = new ArrayList<Photo>();
@@ -36,28 +37,30 @@ public class Album implements Serializable {
     }
 
     /**
-     * @return
+     * @return albumName String 
      */
     public String getAlbumName() {
 	return albumName;
     }
 
     /**
-     * @param albumName
+     * @param albumName STRING 
+     * sets the albumName to the param
      */
     public void setAlbumName(String albumName) {
 	this.albumName = albumName;
     }
 
     /**
-     * @return
+     * @return photos List<Photo>
      */
     public List<Photo> getPhotos() {
 	return photos;
     }
 
     /**
-     * @param photos
+     * @param photos List<Photo> 
+     * sets the photos of the current albums.
      */
     public void setPhotos(List<Photo> photos) {
 	this.photos = photos;
@@ -68,7 +71,8 @@ public class Album implements Serializable {
     }
 
     /**
-     * @param photo
+     * @param photo Photo 
+     * adds a photo to the list of photos of the album
      */
     public void addPhoto(Photo photo) {
 	this.photos.add(photo);
@@ -79,7 +83,7 @@ public class Album implements Serializable {
     }
 
     /**
-     * 
+     * sorts the the list of photos by date.
      */
     public void sortByDate() {
 	Collections.sort(this.photos, new Comparator<Photo>() {
@@ -94,7 +98,8 @@ public class Album implements Serializable {
     }
 
     /**
-     * @param photo
+     * @param photo Photo 
+     * removes the passed in Photo argument from the list of photos. 
      */
     public void removePhoto(Photo photo) {
 	photos.remove(photo);
@@ -102,36 +107,42 @@ public class Album implements Serializable {
     }
 
     /**
-     * @param photo
-     * @return
+     * @param photo Photo
+     * @return boolean 
+     * returns true if the photo argument exists in the list of photos 
+     * returns false if the photo argument does NOT exist in the list of photos.
      */
     public boolean photoExists(Photo photo) {
 	return photos.contains(photo);
     }
 
     /**
-     * @return
+     * @return size Int 
+     * size = size of the list of all photos.
      */
     public int getSize() {
 	return size;
     }
 
     /**
-     * @param size
+     * @param size int 
+     * sets the size of the album to the param passed in.
      */
     public void setSize(int size) {
 	this.size = size;
     }
 
     /**
-     * @return
+     * @return Photo 
+     * returns the earliest Photo in the album. 
      */
     public Photo getEarliestPhoto() {
 	return earliestPhoto;
     }
 
     /**
-     * @param earliestPhoto
+     * @param earliestPhoto Photo 
+     * sets the earliestPhoto of the album to the param passed in.
      */
     public void setEarliestPhoto(Photo earliestPhoto) {
 	if (earliestPhoto != null) {
@@ -140,8 +151,11 @@ public class Album implements Serializable {
     }
 
     /**
-     * @param p
-     * @return
+     * @param p Photo
+     * @return Photo 
+     * returns the previous photo in the list of photos. 
+     * returns null if the size of the list is 1 
+     * returns null if the photo argument passed in is the first photo in the list.
      */
     public Photo previousPhoto(Photo p) {
 	if (p == null) {
@@ -164,8 +178,11 @@ public class Album implements Serializable {
     }
 
     /**
-     * @param p
-     * @return
+     * @param p Photo
+     * @return Photo
+     * returns the next photo in the list of photos. 
+     * returns the photo passed in if the size of the list 1.
+     * returns null if the photo argument passed in is equal to null.
      */
     public Photo nextPhoto(Photo p) {
 	if (p == null) {
@@ -188,14 +205,15 @@ public class Album implements Serializable {
     }
 
     /**
-     * @return
+     * @return oldestPhoto Photo
      */
     public Photo getOldestPhoto() {
 	return oldestPhoto;
     }
 
     /**
-     * @param oldestPhoto
+     * @param oldestPhoto Photo 
+     * sets the oldestPhoto in the album to the param passed in.
      */
     public void setOldestPhoto(Photo oldestPhoto) {
 	if (oldestPhoto != null) {
@@ -204,7 +222,7 @@ public class Album implements Serializable {
     }
 
     /**
-     * @return
+     * @return the range of the earliest and oldest dates in the album. String type is returned
      */
     public String getDateRange() {
 	if (this.size > 0) {
@@ -215,7 +233,8 @@ public class Album implements Serializable {
     }
 
     /**
-     * @param dateRange
+     * @param dateRange double 
+     * sets the data range to the param passed in.
      */
     public void setDateRange(double dateRange) {
 	this.dateRange = dateRange;

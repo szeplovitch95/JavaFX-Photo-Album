@@ -101,7 +101,7 @@ public class PhotoSearchResultController implements Initializable {
 	});
 
 	photoResultLV.setItems(obsList);
-	
+
 	stage.setOnCloseRequest(e -> {
 	    try {
 		saveData();
@@ -170,7 +170,8 @@ public class PhotoSearchResultController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
-     * method that changes the scene/stage and goes back to the main page of the application.
+     *             method that changes the scene/stage and goes back to the main
+     *             page of the application.
      */
     @FXML
     protected void backToMainBtnAction(ActionEvent event) throws IOException, ClassNotFoundException {
@@ -182,7 +183,7 @@ public class PhotoSearchResultController implements Initializable {
 	controller.setUser(currentUser);
 	controller.setStage(stage);
 	controller.initData();
-	
+
 	stage.setScene(homeScene);
 	stage.show();
     }
@@ -191,7 +192,8 @@ public class PhotoSearchResultController implements Initializable {
      * @param event
      * @throws IOException
      * @throws ClassNotFoundException
-     *	method that changes the scene and goes back to the album page of the current pictures.
+     *             method that changes the scene and goes back to the album page
+     *             of the current pictures.
      */
     @FXML
     protected void backToAlbumPage(ActionEvent event) throws IOException, ClassNotFoundException {
@@ -203,16 +205,16 @@ public class PhotoSearchResultController implements Initializable {
 	controller.setUser(currentUser);
 	controller.setStage(stage);
 	controller.initData();
-	
+
 	stage.setScene(homeScene);
 	stage.show();
     }
 
     /**
-     * @return searchedPhotos List<Photo>
-     * iterates thru the all of the photos in the users albums and gets the searched ones.
+     * @return searchedPhotos List<Photo> iterates thru the all of the photos in
+     *         the users albums and gets the searched ones.
      */
-    
+
     private List<Photo> getSearchedPhotoList() {
 	if (searchedTagsList.size() == 0 && startDate == null && endDate == null) {
 	    return allPhotos;
@@ -239,10 +241,14 @@ public class PhotoSearchResultController implements Initializable {
     }
 
     /**
-     * @param startDate LocalDate
-     * @param endDate LocalDate
-     * @param p Photo 
-     * @return false/true depending if the date is contained within the specified date range.
+     * @param startDate
+     *            LocalDate
+     * @param endDate
+     *            LocalDate
+     * @param p
+     *            Photo
+     * @return false/true depending if the date is contained within the
+     *         specified date range.
      */
     private boolean isContainedInDateRange(LocalDate startDate, LocalDate endDate, Photo p) {
 	if (startDate == null && endDate == null) {
@@ -326,15 +332,16 @@ public class PhotoSearchResultController implements Initializable {
     }
 
     /**
-     * @return userList PhotoAlbumUsers 
+     * @return userList PhotoAlbumUsers
      */
     public PhotoAlbumUsers getUserList() {
 	return userList;
     }
 
     /**
-     * @param userList PhotoAlbumUsers
-     * sets the current userList to the param passed into this function.
+     * @param userList
+     *            PhotoAlbumUsers sets the current userList to the param passed
+     *            into this function.
      */
     public void setUserList(PhotoAlbumUsers userList) {
 	this.userList = userList;
@@ -349,7 +356,8 @@ public class PhotoSearchResultController implements Initializable {
 
     /**
      * @throws ClassNotFoundException
-     * saves the data by serializing it and writing it to the .dat file of the application.
+     *             saves the data by serializing it and writing it to the .dat
+     *             file of the application.
      */
     private void saveData() throws ClassNotFoundException {
 	try {
@@ -361,7 +369,7 @@ public class PhotoSearchResultController implements Initializable {
 
     /**
      * @param stage
-     * sets the current stage to the param passed into this function.
+     *            sets the current stage to the param passed into this function.
      */
     public void setStage(Stage stage) {
 	this.stage = stage;
@@ -376,15 +384,16 @@ public class PhotoSearchResultController implements Initializable {
 
     /**
      * @param currentAlbumChosen
-     * sets the currentAlbumChosen to the param passed into this function.
+     *            sets the currentAlbumChosen to the param passed into this
+     *            function.
      */
     public void setCurrentAlbumChosen(Album currentAlbumChosen) {
 	this.currentAlbumChosen = currentAlbumChosen;
     }
 
     /**
-     * @return List<photo> userPhotoList 
-     * returns all of the photos of the current user.
+     * @return List<photo> userPhotoList returns all of the photos of the
+     *         current user.
      */
     private List<Photo> getAllUserPhotos() {
 	List<Photo> userPhotoList = new ArrayList<Photo>();
@@ -407,7 +416,7 @@ public class PhotoSearchResultController implements Initializable {
 
     /**
      * @param currentUser
-     * sets the curent user to the param.
+     *            sets the current user to the param.
      */
     public void setCurrentUser(User currentUser) {
 	this.currentUser = currentUser;
@@ -422,7 +431,7 @@ public class PhotoSearchResultController implements Initializable {
 
     /**
      * @param searchedTagsList
-     * sets the searchedTagsList to the param.
+     *            sets the searchedTagsList to the param.
      */
     public void setSearchedTagsList(List<Tag> searchedTagsList) {
 	this.searchedTagsList = searchedTagsList;
@@ -437,7 +446,8 @@ public class PhotoSearchResultController implements Initializable {
 
     /**
      * @param startDatePicker
-     * sets the start date of the search result parameter to the param passed into this function.
+     *            sets the start date of the search result parameter to the
+     *            param passed into this function.
      */
     public void setStartDate(LocalDate startDatePicker) {
 	this.startDate = startDatePicker;
@@ -451,8 +461,9 @@ public class PhotoSearchResultController implements Initializable {
     }
 
     /**
-     * @param endDate LocalDate
-     * returns the endDate of the search result parameter to the param passed into this function.
+     * @param endDate
+     *            LocalDate returns the endDate of the search result parameter
+     *            to the param passed into this function.
      */
     public void setEndDate(LocalDate endDate) {
 	this.endDate = endDate;

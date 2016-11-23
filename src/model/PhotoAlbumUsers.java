@@ -29,29 +29,35 @@ public class PhotoAlbumUsers implements Serializable {
     }
 
     /**
-     * @param user
+     * @param user User
+     * method that adds a new user to the Photo Album List of Users.
      */
     public void addUser(User user) {
 	users.add(user);
     }
 
     /**
-     * @return
+     * @return users ArrayList<User>
+     * returns the list of users of the application
      */
     public ArrayList<User> getUsers() {
 	return users;
     }
 
     /**
-     * @param user
+     * @param user User 
+     * remove a user from the list of users.
      */
     public void removeUser(User user) {
 	users.remove(user);
     }
 
     /**
-     * @param username
-     * @return
+     * @param username String 
+     * @return User
+     *	method that tries to find and return the User object that matches the username String variable 
+     *	passed into the method. 
+     *	returns null if not found.
      */
     public User getUserByUsername(String username) {
 	for (User u : users) {
@@ -64,8 +70,10 @@ public class PhotoAlbumUsers implements Serializable {
     }
 
     /**
-     * @param username
-     * @return
+     * @param username String
+     * @return boolean : true/false 
+     * checks to see if the username is taken or not by iterating thru the user list array to see
+     * if the username String variable argument matches any of them.
      */
     public boolean isUsernameTaken(String username) {
 	for (User u : users) {
@@ -78,9 +86,10 @@ public class PhotoAlbumUsers implements Serializable {
     }
 
     /**
-     * @param username
-     * @param password
-     * @return
+     * @param username String
+     * @param password String
+     * @return boolean true or false 
+     * checks to see if the user exists in the main list of all users.
      */
     public boolean userExists(String username, String password) {
 	for (User u : users) {
@@ -112,6 +121,7 @@ public class PhotoAlbumUsers implements Serializable {
      * @return
      * @throws IOException
      * @throws ClassNotFoundException
+     * reads the data from the serialized .dat file of the system.
      */
     public static PhotoAlbumUsers read() throws IOException, ClassNotFoundException {
 	ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
@@ -121,8 +131,9 @@ public class PhotoAlbumUsers implements Serializable {
     }
 
     /**
-     * @param listOfAllUsers
+     * @param listOfAllUsers PhotoAlbumUsers
      * @throws IOException
+     * writes data into the .dat serialized file.
      */
     public static void write(PhotoAlbumUsers listOfAllUsers) throws IOException {
 	ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));

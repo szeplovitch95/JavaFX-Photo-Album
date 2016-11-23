@@ -54,7 +54,14 @@ public class LoginController implements Initializable {
 	    e.printStackTrace();
 	}
     }
+    
+    
 
+    /**
+     * @throws ClassNotFoundException
+     * @throws IOException
+     * initializes data necessary for the LoginController to work properly.
+     */
     public void initData() throws ClassNotFoundException, IOException {
 	userList = PhotoAlbumUsers.read();
 	BooleanBinding bb = new BooleanBinding() {
@@ -146,7 +153,7 @@ public class LoginController implements Initializable {
 
     /**
      * @param stage
-     * Stage sets the Admin's controller stage to the stage param.
+     *            Stage sets the Admin's controller stage to the stage param.
      */
 
     public void setStage(Stage stage) {
