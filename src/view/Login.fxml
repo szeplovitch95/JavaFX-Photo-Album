@@ -28,7 +28,7 @@
 							AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="131.0"
 							AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="23.0">
 							<image>
-								<Image url="@../../images/album-maker-icon.png" />
+								<Image url="@../../docs/images/album-maker-icon.png" />
 							</image>
 						</ImageView>
 					</children>

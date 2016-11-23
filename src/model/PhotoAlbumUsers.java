@@ -20,7 +20,7 @@ public class PhotoAlbumUsers implements Serializable {
      */
     private static final long serialVersionUID = -6950811887381647695L;
     public static final String storeDir = "Users";
-    public static final String storeFile = "users.dat";
+    public static final String storeFile = "allusers.dat";
 
     private ArrayList<User> users;
 

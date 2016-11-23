@@ -116,6 +116,7 @@ public class LoginController implements Initializable {
 		    adminStage.setScene(adminScene);
 		    adminCtrl = loader.getController();
 		    adminCtrl.setStage(adminStage);
+		    adminCtrl.initData();
 		    closeLoginWindow();
 		    adminStage.show();
 		} else {

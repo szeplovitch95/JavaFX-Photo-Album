@@ -49,11 +49,6 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-	try {
-	    initData();
-	} catch (ClassNotFoundException | IOException o) {
-	    o.printStackTrace();
-	}
     }
 
     /**
