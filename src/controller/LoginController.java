@@ -27,137 +27,150 @@ import model.*;
  */
 
 public class LoginController implements Initializable {
-    @FXML
-    TextField usernameTF;
-    @FXML
-    PasswordField passwordTF;
-    @FXML
-    Label invalidLogin;
-    @FXML
-    FlowPane flowPane;
-    @FXML
-    Button loginBtn;
+	@FXML
+	TextField usernameTF;
+	@FXML
+	PasswordField passwordTF;
+	@FXML
+	Label invalidLogin;
+	@FXML
+	FlowPane flowPane;
+	@FXML
+	Button loginBtn;
 
-    private Stage stage;
-    private String username;
-    private PhotoAlbumUsers userList;
+	private Stage stage;
+	private String username;
+	private PhotoAlbumUsers userList;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-	try {
-	    initData();
-	} catch (ClassNotFoundException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    // TODO Auto-generated catch block
-	    e.printStackTrace();
-	}
-    }
-    
-    
-
-    /**
-     * @throws ClassNotFoundException
-     * @throws IOException
-     * initializes data necessary for the LoginController to work properly.
-     */
-    public void initData() throws ClassNotFoundException, IOException {
-	userList = PhotoAlbumUsers.read();
-	BooleanBinding bb = new BooleanBinding() {
-	    {
-		super.bind(usernameTF.textProperty(), passwordTF.textProperty());
-	    }
-
-	    @Override
-	    protected boolean computeValue() {
-		return (usernameTF.getText().trim().isEmpty() || passwordTF.getText().trim().isEmpty());
-	    }
-	};
-
-	loginBtn.disableProperty().bind(bb);
-
-	flowPane.setOnKeyReleased(e -> {
-	    try {
-		if (e.getCode() == KeyCode.ENTER) {
-		    login(null);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL,
+	 * java.util.ResourceBundle)
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			initData();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	    } catch (ClassNotFoundException | IOException o) {
-		o.printStackTrace();
-	    }
-	});
-    }
-
-    /**
-     * @param event
-     *            ActionEvent
-     * @throws ClassNotFoundException,
-     *             IOException This method catches the user's click event to
-     *             login into the system.
-     */
-
-    @FXML
-    private void login(ActionEvent event) throws ClassNotFoundException, IOException {
-	Parent root;
-	Stage adminStage, userStage;
-	Scene adminScene, userScene;
-	AdminController adminCtrl;
-
-	try {
-	    if (userList.userExists(usernameTF.getText().trim(), passwordTF.getText().trim())) {
-		if (usernameTF.getText().trim().equals("admin") && passwordTF.getText().trim().equals("admin")) {
-		    username = "admin";
-		    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminMainPage.fxml"));
-		    root = loader.load();
-		    adminScene = new Scene(root);
-		    adminStage = new Stage();
-		    adminStage.setResizable(false);
-		    adminStage.setTitle("Admin Subsystem");
-		    adminStage.setScene(adminScene);
-		    adminCtrl = loader.getController();
-		    adminCtrl.setStage(adminStage);
-		    adminCtrl.initData();
-		    closeLoginWindow();
-		    adminStage.show();
-		} else {
-		    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
-		    root = loader.load();
-		    userScene = new Scene(root);
-		    userStage = new Stage();
-		    userStage.setResizable(false);
-		    userStage.setTitle("Welcome to Photo Album App");
-		    userStage.setScene(userScene);
-		    AlbumsController controller = loader.getController();
-		    controller.setListOfUsers(userList);
-		    controller.setCurrentUser(usernameTF.getText().trim());
-		    controller.setStage(userStage);
-		    controller.initData();
-		    closeLoginWindow();
-		    userStage.show();
-		}
-	    }
-
-	    invalidLogin.setText("Username and password combination does not exist.");
-	} catch (IOException e) {
-	    e.printStackTrace();
 	}
-    }
 
-    /**
-     * closed the the current nonadmin user system window.
-     */
+	/**
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public void initData() throws ClassNotFoundException, IOException {
+		userList = PhotoAlbumUsers.read();
+		BooleanBinding bb = new BooleanBinding() {
+			{
+				super.bind(usernameTF.textProperty(), passwordTF.textProperty());
+			}
 
-    public void closeLoginWindow() {
-	stage = (Stage) usernameTF.getScene().getWindow();
-	stage.close();
-    }
+			@Override
+			protected boolean computeValue() {
+				return (usernameTF.getText().trim().isEmpty() || passwordTF.getText().trim().isEmpty());
+			}
+		};
 
-    /**
-     * @param stage
-     *            Stage sets the Admin's controller stage to the stage param.
-     */
+		loginBtn.disableProperty().bind(bb);
 
-    public void setStage(Stage stage) {
-	this.stage = stage;
-    }
+		flowPane.setOnKeyReleased(e -> {
+			try {
+				if (e.getCode() == KeyCode.ENTER) {
+					login(null);
+				}
+			} catch (ClassNotFoundException | IOException o) {
+				o.printStackTrace();
+			}
+		});
+	}
+
+	/**
+	 * @param event
+	 *            ActionEvent
+	 * @throws ClassNotFoundException,
+	 *             IOException This method catches the user's click event to
+	 *             login into the system.
+	 */
+
+	/**
+	 * @param event
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	@FXML
+	private void login(ActionEvent event) throws ClassNotFoundException, IOException {
+		Parent root;
+		Stage adminStage, userStage;
+		Scene adminScene, userScene;
+		AdminController adminCtrl;
+
+		try {
+			if (userList.userExists(usernameTF.getText().trim(), passwordTF.getText().trim())) {
+				if (usernameTF.getText().trim().equals("admin") && passwordTF.getText().trim().equals("admin")) {
+					username = "admin";
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminMainPage.fxml"));
+					root = loader.load();
+					adminScene = new Scene(root);
+					adminStage = new Stage();
+					adminStage.setResizable(false);
+					adminStage.setTitle("Admin Subsystem");
+					adminStage.setScene(adminScene);
+					adminCtrl = loader.getController();
+					adminCtrl.setStage(adminStage);
+					closeLoginWindow();
+					adminStage.show();
+				} else {
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NonAdminMainPage.fxml"));
+					root = loader.load();
+					userScene = new Scene(root);
+					userStage = new Stage();
+					userStage.setResizable(false);
+					userStage.setTitle("Welcome to Photo Album App");
+					userStage.setScene(userScene);
+					AlbumsController controller = loader.getController();
+					controller.setListOfUsers(userList);
+					controller.setCurrentUser(usernameTF.getText().trim());
+					controller.setStage(userStage);
+					controller.initData();
+					closeLoginWindow();
+					userStage.show();
+				}
+			}
+
+			invalidLogin.setText("Username and password combination does not exist.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * closed the the current nonadmin user system window.
+	 */
+
+	/**
+	 * 
+	 */
+	public void closeLoginWindow() {
+		stage = (Stage) usernameTF.getScene().getWindow();
+		stage.close();
+	}
+
+	/**
+	 * @param stage
+	 *            Stage sets the Admin's controller stage to the stage param.
+	 */
+
+	/**
+	 * @param stage
+	 */
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 }

@@ -29,9 +29,9 @@ public class PhotoAlbum extends Application {
 		PhotoAlbumUsers uList = new PhotoAlbumUsers();
 		
 		try {
-//		    	User admin = new User("admin", "admin"); 
-//		    	uList.addUser(admin);
-//			PhotoAlbumUsers.write(uList);
+		    	User admin = new User("admin", "admin"); 
+		    	uList.addUser(admin);
+			PhotoAlbumUsers.write(uList);
 			
 			if(PhotoAlbumUsers.read() == null) {
 				createAdmin();
